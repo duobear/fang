@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>input/button</title>
+</head>
+
+<body>
+
+  <form action="users" method="get">
+  <!-- input表单中的name很重要，没有name就没有参数上传 -->
+  <!-- 参数后面的值如果是中文，会转义    --> 
+   <label >姓名<input type="text" name="username"> </label>  <br>
+   <label >密码 <input type="password" name="password"></label> <br>
+<!-- 选中label中的文字，自动选中input的框 -->
+      <!-- 方法1 需要for和id-->
+      <label for="xxx">苹果</label> <input type="checkbox" id="xxx" name="xxx"><br>
+      <!-- 方法2  不用for和id-->
+      <label>香蕉 <input type="checkbox" name="xxx"></label>  <br>
+ <!-- 之前已经知道name必须有，是参数的意思，那参数后面的值是value的值 -->
+ <!-- 多选框如果没有value的时候，并且被选中的时候，参数上传是xxx=on -->  
+水果：<label>苹果 <input type="checkbox" name="xxx"></label>
+<!-- 多选框如果没香蕉有value的时候，并且被选中的时候，参数上传是xxx=ok -->  
+    <label>香蕉 <input type="checkbox" name="xxx" value="ok"></label><br>
+<!-- 单选框中的name如果是相同时，就可以单选生效 -->
+性别：<label><input type="radio" name="sex" value="男">男</label>
+    <label><input type="radio" name="sex" value="女">女</label>
+
+<!-- 下拉列表，option的value是空，只有selected属性没有的时候，才能默认为空，如果有selected就是优先默认选select属性的option -->
+<!-- option属性是disabled就是列表选不了 -->
+<!-- section属性还有一个multiple属性可以提交多组，group=1&group=2 -->
+    <select name="group"  >
+      <option value="">一</option>
+      <option value="1">第一组</option>
+      <option value="2">第二组</option> 
+      <option value="3" disabled>第三组</option>
+      <option value="4" selected>第四组</option>
+    </select>
+<!-- css控制宽高，或者cols和rows控制宽高 -->
+    <textarea  name="爱好" style="resize:none;width: 200px;height: 200px;"  cols="30" rows="10"></textarea>
+    <input type="submit" value="提交">    
+  </form>
+
+
+<!-- 按钮自动升级为提交按钮 -->
+  <form action="users">
+      <input type="text" name="username">
+    <button>button</button>
+  </form>
+
+<!-- 根据type规定只是普通按钮，没有提交按钮 -->
+  <form action="users">
+      <input type="text" name="username">
+    <button type="button">button</button>
+  </form>
+
+  <!-- 根据type规定是提交按钮 -->
+  <form action="users">
+      <input type="text" name="username">
+    <button type="submit">button</button>
+  </form>
+
+
+</body>
+
+</html>

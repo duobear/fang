@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>a标签</title>
+</head>
+<body>
+<!-- target属性规定在何处打开链接文档。 -->
+    <a href="http://qq.com" target="_blank"> 值为 _blank是在新的窗口打开文档</a>     <br>  
+    <a href="http://qq.com" target="_self">值为  _self是在当前页面窗口打开文档</a> <br>
+    <a href="http://qq.com" target="_parent"> 值为 _parent是在父级窗口打开文档</a> <br>
+    <a href="http://qq.com" target="_top">值为  _top是在顶层窗口打开文档</a> <br>
+
+<!-- download属性，是用来下载。 -->
+     <a href="./w3logo.gif" download>      下载     </a>   <br>
+
+<!-- href属性的值可以使下面几种方式。-->
+    <a href="qq.com" > href值这样写不能正确打开页面  </a>  <br>
+    <a href="http://qq.com" > href值直接写绝对路径 </a>   <br>
+    <a href="xxx.com" > href值直接写相对路径 </a>  <br>
+    <a href="//qq.com" > 双斜杠表示；当前协议是什么，href值就用什么协议，自动补全</a>   <br>
+    <a href="#dddd" > 锚点,只有锚点不发起请求</a>   <br>
+    <a href="?name=framek" > 自动在当前a.html后面＋href的值</a>   <br>
+    <a href="javascritp:;">伪协议</a><br>
+    <a href="javascript:alerte(1);">可以执行js代码alert</a><br>
+</body>
+</html>

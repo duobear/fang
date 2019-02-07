@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>form标签</title>
+</head>
+<body>
+<!-- a标签和form方法一致，都是默认的get方法，但是form表单中必须要有提交按钮。 --> 
+  <a href="index2.html">link</a>
+  <form action="index2.html" >
+    <input type="submit" value="提交">      
+  </form>
+
+  <!-- method属性的值可以使默认的get，明写的get和明写的post,method是用来表示请求的方式-->
+  <!-- 值是get时，参数会在浏览器链接中显示，值是post会在浏览器的chorme的network中显示 -->
+  <!-- 没有method属性，默认其为get -->
+  <form action="index2.html" >
+      <input type="submit" value="提交">
+   </form>
+   <!-- 写method属性值为get -->
+ <form action="index2.html" method="get">
+    <input type="submit" value="提交">
+ </form>
+ <!-- 写method属性值为post -->
+ <form action="index2.html" method="post">
+    <input type="submit" value="提交">
+ </form>
+
+<!-- form标签也有target属性，和a标签的target属性一样用法一致 -->
+ <form action="index2.html" method="post">
+    <input type="submit" value="提交">
+ </form>
+
+
+ 
+</body>
+</html>

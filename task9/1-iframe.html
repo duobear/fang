@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>iframe</title>
+  <style>
+  iframe{
+    width:100%;height: 400px;;
+  }</style>
+</head>
+<body>
+  <!-- iframe标签是在当前页面嵌套一个iframe的页面，页面的内容由src路径决定 -->
+  <!-- iframe展示内容有下面三种方式 -->
+  <!-- 1绝对路径-->
+  <iframe src="http://qq.com" frameborder="0"></iframe>
+
+ <!-- 2不写路径，利用a标签打开页面 -->
+  <iframe name="xxx" src="#" frameborder="0"></iframe>
+  <a  target="xxx" href="http://qq.com">  qq</a>
+  <a  target="xxx" href="http://baidu.com">baidu</a>
+
+<!-- 3相对路径 -->
+  <iframe src="./1.html" frameborder="0"></iframe>
+  
+</body>
+</html>

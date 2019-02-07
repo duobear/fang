@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>table</title>
+</head>
+
+<body>
+    <table border="1">
+      <colgroup>
+        <col width="100">
+        <col bgcolor="red" width="200">
+        <col width="100">
+        <col width="70">
+      </colgroup>
+      <thead>
+        <tr><th>项目</th><th>姓名</th><th>班级</th><th>分数</th></tr>
+    </thead>
+      <tbody>
+        <tr><th></th><td>小明</td><td>1</td><td>94</td></tr>
+        <tr><th></th><td>小红</td><td>2</td><td>96</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><th>平均分</th><td></td><td></td><td>95</td></tr>
+        <tr><th>总分</th><td></td><td></td><td>190</td></tr>
+      </tfoot>
+    </table>
+  <!-- table是按照顺序的，头，身体，脚，如果脚在前面，解析还是按照头，身体，脚 -->
+  <!-- table是按照顺序的，头，身体，脚，如果脚在前面，解析还是按照头，身体，脚 -->
+  <!-- table没有头的时候 ，所有head中的内容都放在另起的身体tbody中-->
+  <!-- table没有身体tbody的时候，浏览器会自动补上身体tbody -->
+  <!-- table没有脚的时候 ，浏览器会被脚的部分另起一个tbody-->
+  <!--colgroup指定表格的背景色，宽度-->
+</body>
+
+</html>
