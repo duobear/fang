@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  .kuan{width:200px;height: 200px;border: 1px solid red ;position: relative}
+  .yuan{
+    width: 10px;height: 10px;background: grey;   border-radius: 50%;
+    position: absolute;left: 0;right: 0;top: 0;bottom: 0;    margin: auto; 
+    animation: abc 1.5s infinite;
+  }
+  .yuan:nth-child(2){
+
+    animation-delay: .75s;
+  }
+  @keyframes abc{
+    0%{
+      width: 0;height: 0;opacity: 1;
+    }
+    100%{
+      width: 100px;height: 100px;opacity: 0;
+    }
+  }
+
+  .loading{
+    width:200px;height: 200px;border: 1px solid black ;position: relative
+  }
+
+  .loading::before{
+    content: '';
+    width: 10px;height: 10px;background: grey;   border-radius: 50%;
+    position: absolute;left: 0;right: 0;top: 0;bottom: 0;    margin: auto; 
+    animation: abc 1.5s infinite;
+  }
+
+  .loading::after{
+    animation-delay: .75s;
+  }
+
+  </style>
+</head>
+<body>
+  <!-- 普通方法 -->
+  <div class="kuan">
+    <div class="yuan"></div>
+    <div class="yuan"></div>
+  </div>
+  ===========================
+  <!-- 普通方法改良精简 -->
+  <div class="loading"></div>
+</body>
+</html>
