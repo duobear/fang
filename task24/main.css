@@ -80,7 +80,7 @@ h1,h2,h3,h4,h5,h6{
 .topNavBar .submenu{
   display: none;
   position: absolute;
-  left: 0;
+  right: 0;
   top: 100%;
   background: white;
   color: #3d4451;
@@ -90,6 +90,7 @@ h1,h2,h3,h4,h5,h6{
   display: block;  
   animation: submenuSlide .3s;
   box-shadow: 0 0 5px rgba(0,0,0,0.5);
+
 }
 
 @keyframes submenuSlide{
