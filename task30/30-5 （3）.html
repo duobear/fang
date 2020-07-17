@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>   
+   
+    <title>自动轮播的优化</title>
+    <style>
+        .images{
+            display: flex;
+            align-items: flex-start;           
+            transition: all 0.5s;
+        }
+     
+        .images >img{
+            vertical-align: top;
+        }
+        
+        .window{           
+            width: 300px;
+            overflow: hidden;
+        }
+        .red{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="window">
+       <div class="images" id="images">
+           <img src="http://pic.wenwen.soso.com/p/20120425/20120425134051-2118124956.jpg" width="300" alt="">
+           <img src="https://i02piccdn.sogoucdn.com/53cce08d8b78b5b8" width="300" alt="">
+           <img src="https://i2.7414.cn/u/xyx/b/104273.jpg" width="300" alt="">
+       </div>
+    </div>
+    <div id="buttons">
+        <span>第1张</span>
+        <span>第2张</span>
+        <span>第3张</span>
+    </div>
+    
+
+
+ 
+
+    <script>   
+    // allButtons[i]是dom对象，可以用allButtons[i].onclick(); $(allButtons[i])是juqery对象，可以用 $(allButtons[i]).on('click',function(x){}
+    // dom方法知道我是第几个元素，，var n   var children=s。parentNode。children   for（let i=0;i<children.lenth;i++){if(chiliren[i]===s) n=i;break;}
+    // jquery  直接就是封装成。index（）
+      var allButtons=$('#buttons >span')
+      for(let i=0;i<allButtons.length;i++){
+          $(allButtons[i]).on('click',function(x){
+           
+            var index=$(x.currentTarget).index()
+            var p=index*-300
+            $('#images').css({
+                transform:'translateX('+p+'px)'
+            })
+            n=index           
+            activeButtom(allButtons.eq(n))
+          })
+      }
+      var n=0;
+      var size=allButtons.length
+  
+        playSlide(n%size)
+        
+        var timeID=setTimer()
+        
+        function setTimer(){
+            return setInterval(() => {
+                n+=1
+                playSlide(n%size)                
+            }, 3000);
+        }
+
+        function playSlide(index){
+            allButtons.eq(index).trigger('click')
+        }
+
+        function activeButtom($button){
+            $button.addClass('red').siblings('.red').removeClass('red')
+        }
+ 
+
+      $('.window').on('mouseenter',function(){
+          window.clearInterval(timrID)
+      })
+
+      $('.window').on('mouseleave',function(){
+        timrID=setTimer()
+      })
+
+        
+  
+    </script>
+
+   
+    
+</body>
+</html>
