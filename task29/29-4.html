@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nod的共有属性</title>
+</head>
+<body>
+    <ul>
+        <li id="item1">xuanxian1</li>
+        <li id="item2">xuanxian2</li>
+        <li id="item3">xuanxian3</li>
+        <li id="item4">xuanxian4</li>
+        <li id="item5">xuanxian5</li>
+    </ul>
+
+
+    <script>
+
+        Node.prototype.getSibling = function () {
+            var allchildren = this.parentNode.children
+            var array = {
+                length: 0
+            }
+            for (i = 0; i < allchildren.length; i++) {
+                if (allchildren[i] !== this) {
+                    array[array.length] = allchildren[i];
+                    length = length + 1
+                }
+            }
+            return array;
+
+        }
+
+        Node.prototype.addClass = function (classes) {           
+            classes.forEach(value => {this.classList.add(value)                
+            });
+        }
+
+        // item3.getSibling()       item3.addClass(['a','b','c']) 隐式
+        // item3.getSibling.call(item3)      item3.addClass.call(item3,['a','b','c'])  显式
+
+
+
+        // 互相覆盖，不能原型，我写一个NODE2
+
+        Window.Node2=function(){
+            return{
+                getSibling:function(){},
+                addClass:function(){}
+            }
+        }
+
+        // item3是旧的node，利用node2，可以返回node2里面的方法，可以不用node的方法了
+         // item3.getSibling()              item3.addClass(['a','b','c']) 隐式
+         // Node2(item3).getSibling()       Node2(item3).addClass(['a','b','c']) 隐式
+        var node2=Node2(item3)
+        node2.getSibling()
+        node2.addClass(['a','b','c'])
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自己封装的两个函数</title>
+</head>
+
+<body>
+    <ul>
+        <li id="item1">xuanxian1</li>
+        <li id="item2">xuanxian2</li>
+        <li id="item3">xuanxian3</li>
+        <li id="item4">xuanxian4</li>
+        <li id="item5">xuanxian5</li>
+    </ul>
+
+    <script>
+        // children 获取的是元素节点，不是文本节点
+
+
+        // 需求就是，获取指定item3元素节点的所有兄弟节点，
+        // 直白写法，就直接用了
+        // var allchildren = item3.parentNode.children
+        // var array = {
+        //     length: 0
+        // }
+        // for (let i = 0; i < allchildren.length; i++) {
+        //     if (allchildren[i] !== = item3) {
+        //         array[array.length] = allchildren[i]
+        //         array.length += 1
+        //     }
+        // }
+        // 封装写法，封装成函数getSibling，就是API，后续需要引用才是真正的用
+        function getSibling(node) {
+            var allchildren = node.parentNode.children
+            var array = {
+                length: 0
+            }
+            for (let i = 0; i < allchildren.length; i++) {
+                if (allchildren[i] !== node) {
+                    array[array.length] = allchildren[i];
+                    length = length + 1
+                }
+            }
+            return array;
+
+        }
+        // 引用就是 getSibling（item3）
+
+
+        // 需求就是，给指定元素item3，加上class名
+        // 直白写法
+        // item3.classList.add('a')
+        // item3.classList.add('b')
+        // item3.classList.add('c')
+
+        //简易直白写法
+        // var classes=['a','b','c']
+        // classList.forEach(value => {item3.classList.add(value)    
+        // });
+
+        // 需求上增加一个可以使得可以随意添加，或者移除claas名
+
+
+        // 增加难度的写法
+        // var classes = {
+        //     'a': true,
+        //     'b': true,
+        //     'c': false
+        // }
+        // for (let key in classes) {
+        //     var value = classes[key]
+        //     if (value) {
+        //         item3.classList.add(key)
+        //     } else {
+        //         item3.classList.remove(key)
+        //     }
+        // }
+
+        // 封装写法
+        // function addClass(node, classes) {
+        //     for (let key in classes) {
+        //         var value = classes[key]
+        //         if (value) {
+        //             node.classList.add(key);
+        //         } else {
+        //             node.classList.remove(key);
+        //         }
+        //     }
+        // }
+
+        // 优化封装写法
+        function addClass(node, classes) {
+            for (let key in classes) {
+                var value = classes[key]
+                var flag = value ? "add" : "remove"
+                node.classList[flag](key)
+
+
+            }
+        }
+
+
+
+
+   
+
+
+        // 命名空间，起个自己的名字
+        window.zqf = {}
+        zqf.a = getSibling
+        zqf.b = addClass
+
+        // 引用
+        zqf.a(item3)
+        zqf.b(item3, {
+            'a': true,
+            'b': true,
+            'c': false
+        })
+
+
+
+
+    </script>
+
+</body>
+
+</html>

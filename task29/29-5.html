@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node2</title>
+</head>
+<body>
+    <ul>
+        <li id="item1">xuanxian1</li>
+        <li id="item2">xuanxian2</li>
+        <li id="item3">xuanxian3</li>
+        <li id="item4">xuanxian4</li>
+        <li id="item5">xuanxian5</li>
+    </ul>
+
+
+    <script>
+
+         // item3.getSibling()              item3.addClass(['a','b','c']) 隐式
+         // Node2(item3).getSibling()       Node2(item3).addClass(['a','b','c']) 隐式
+        //  列的大纲
+        // Window.Node2=function(){
+        //     return{
+        //         getSibling:function(){},
+        //         addClass:function(){}
+        //     }
+        // }      
+      
+        // var node2=Node2(item3)
+        // node2.getSibling()
+        // node2.addClass(['a','b','c'])
+
+
+
+        // 写的具体
+        Window.Node2=function(node){
+            return{
+                getSibling:function () {
+                var allchildren = node.parentNode.children
+                var array = {
+                    length: 0
+                }
+                for (i = 0; i < allchildren.length; i++) {
+                    if (allchildren[i] !== node) {
+                        array[array.length] = allchildren[i];
+                        length = length + 1
+                    }
+                }
+                return array;
+
+            },
+                addClass:function (classes) {           
+                    classes.forEach(value => {node.classList.add(value)                
+                    });
+                }
+            }
+        }
+      
+      
+        var node2=Node2(item3)
+        node2.getSibling()
+        node2.addClass(['a','b','c'])
+
+
+
+        // Node2名字变成jQuery，因此可能是节点可能是选择器
+        Window.jQuery=function(nodeorSelector){
+            let node
+            if(tpyeof(nodeorSelector) ==="string") {
+                node=document.querySelector(nodeorSelector)
+                
+            }else{
+                node=nodeorSelector
+            }
+
+
+            return{
+                getSibling:function () {
+                var allchildren = node.parentNode.children
+                var array = {
+                    length: 0
+                }
+                for (i = 0; i < allchildren.length; i++) {
+                    if (allchildren[i] !== node) {
+                        array[array.length] = allchildren[i];
+                        length = length + 1
+                    }
+                }
+                return array;
+
+            },
+                addClass:function (classes) {           
+                    classes.forEach(value => {node.classList.add(value)                
+                    });
+                }
+            }
+        }
+      
+      
+        var node2=jQuery(item3)
+        // var node2=jQuery(“#item3”)
+        node2.getSibling()
+        node2.addClass(['a','b','c'])
+
+        // jquery就是一个构造函数，它接受一个参数，然后这个参数可能是字符串，可能是节点，然后返回一个方法的对象，这个方法用来操作这个节点
+//         query逻辑，给我一个选择器，或者一个节点，我会把找到的结果放nodees，，api就在下面提供，调用实际是去操作nodes，而不是node2；
+//   如果这个函数用到了node，是外面声明的，那么这个node和这个函数就是闭包，我能一直用这个api去操作nodes，访问不到，
+//   但是可以操作。
+
+        //同时操作多个元素，元素添加class名，getSibling没有用，用addClass
+
+
+        Window.jQuery=function(nodeorSelector){
+            let nodes={}
+            if(tpyeof(nodeorSelector) ==="string") {
+                let temp=document.querySelectorAll(nodeorSelector)
+                for(let i=0;i<temp.length;i++){
+                    nodes[i]=temp[i]
+                }
+                nodes.length=temp.length
+                
+            }else if(nodeorSelector instanceof Node){
+                nodes={0:nodeorSelector,length:1}
+            }
+
+
+              
+               nodes.addClass:function (classes) {           
+                    classes.forEach(value => {node.classList.add(value)                
+                    });
+                }
+
+                return nodes
+           
+
+
+        }
+      
+      
+        var node2=jQuery('ul>li')
+        // var node2=jQuery(“#item3”)      
+        node2.addClass(['a'])
+
+
+
+    </script>
+</body>
+</html>

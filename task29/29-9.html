@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+           
+        <div>xuan1</div>
+        <div>xuan2</div>
+        <div>xuan3</div>
+        <div>xuan4</div>
+        <div>xuan5</div>
+   
+    <script>
+        // 要求：可将所有的div的class添加一个red，可将所有的div的textContent变为hi
+        window.jQuery = function (nodeOrSelector) {
+            let  nodes= {}
+            if (typeof nodeOrSelector === "string") {
+                let temp = document.querySelectorAll(nodeOrSelector)
+                for (let i = 0; i < temp.length;i++) {
+                    nodes[i] = temp[i]
+                }
+                nodes.length = temp.length
+            }else if(nodeOrSelector instanceof Node){
+                nodes={0:nodeOrSelector,length:1}
+
+            }           
+
+            nodes.addClass=function(classes){
+                for(i=0;i<nodes.length;i++){
+                    nodes[i].classList.add(classes)
+                }
+            }
+
+            // nodes.Text=function(text){
+            //     if(text===undefined){
+            //         var texts=[]
+            //         for(let i=0;i<nodes.length;i++){
+            //             texts.push(nodes[i].textContent)
+            //         }
+            //         return texts      
+            //     }else{
+            //         for(let i=0;i<nodes.length;i++){
+            //             nodes[i].textContent=text
+            //         }
+            //     }
+
+            // }
+
+            nodes.setText=function(text){
+                for(let i=0;i<nodes.length;i++){
+                    nodes[i].textContent=text
+                    }
+            }
+        return nodes
+
+        }
+        window.$=jQuery
+        var $div=$('div')
+        $div.addClass('red')
+        $div.setText('hi')
+
+        // 首先要明白jQuery是一个函数，，nodes是一个对象，里面包含的方法是addClass和setText，格式就是nodes。xx=funciton（）{}
+        // 开头需要判断传进来的参数是Node还是string
+    </script>
+</body>
+
+</html>

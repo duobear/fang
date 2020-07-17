@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>封装的函数，用命名空间</title>
+</head>
+<body>
+    <ul>
+        <li id="item1">xuanxian1</li>
+        <li id="item2">xuanxian2</li>
+        <li id="item3">xuanxian3</li>
+        <li id="item4">xuanxian4</li>
+        <li id="item5">xuanxian5</li>
+    </ul>
+
+
+<script>
+
+
+    
+        // 上面一节课，虽然命名，但是容易冲突，，因此就不用函数名，直指向函数内容，引用还是跟上面一样，zqf.a(item3),,,   zqf.b(item3, {'a': true,'b': true, 'c': false })
+        // 上面一节课，虽然命名，但是容易冲突，，因此就不用函数名，直指向函数内容，引用还是跟上面一样，zqf.a(item3),,,   zqf.b(item3, ['a','b','c'])
+        window.zqf = {}
+        zqf.a = function (node) {
+            var allchildren = node.parentNode.children
+            var array = {
+                length: 0
+            }
+            for (i = 0; i < allchildren.length; i++) {
+                if (allchildren[i] !== node) {
+                    array[array.length] = allchildren[i];
+                    length = length + 1
+                }
+            }
+            return array;
+
+        }
+
+        zqf.b = function (node, classes) {
+            for (let key in classes) {
+                var value = classes[key]
+                var flag = value ? "add" : "remove"
+                node.classList[flag](key)                   
+
+            }
+        }
+
+        zqf.b = function (node, classes) {           
+            classes.forEach(value => {node.classList.add(value)                
+            });
+        }
+
+
+        // 引用的方式想换另外一种方式，想换成参数在前面的
+        // zqf.getSibling(item3)   zqf.addClass(item3,['a','b','c']),
+        // item3.getSibling()       item3.addClass(['a','b','c'])
+        // 就是想到了原型链,之前的node参数变成了this
+        Node.prototype.getSibling = function () {
+            var allchildren = this.parentNode.children
+            var array = {
+                length: 0
+            }
+            for (i = 0; i < allchildren.length; i++) {
+                if (allchildren[i] !== this) {
+                    array[array.length] = allchildren[i];
+                    length = length + 1
+                }
+            }
+            return array;
+
+        }
+
+        Node.prototype.addClass = function (classes) {           
+            classes.forEach(value => {this.classList.add(value)                
+            });
+        }
+
+        // item3.getSibling()       item3.addClass(['a','b','c']) 隐式
+        // item3.getSibling.call(item3)      item3.addClass.call(item3,['a','b','c'])  显式
+
+</script>
+    
+</body>
+</html>
