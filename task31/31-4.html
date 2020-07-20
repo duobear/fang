@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dom events</title>
+    <link rel="stylesheet" href="./style-yh.css">
+</head>
+<body>
+   <button id=a onclick="print()"></button>
+    <script src="./jquery-3.5.1.min.js"></script>
+    <script>    
+        function print(){
+            console.log('hi')
+        }
+        a.onclick=print
+// html 里面是要小括号， ，js没有小括号
+// 要执行的代码
+    </script>
+
+    <script>
+
+        a.onclick=function(){
+            console.log('1')
+        }
+        a.onclick=function(){
+            console.log('2')
+        }
+        // 属性会覆盖，只有一个有效，因此用队列的addEventListener，用监听
+function f1(){console.log("1")}
+function f1(){console.log("2")}
+        a.addEventListener('click',f1)
+        a.addEventListener('click',f2)
+
+        // 捕获 冒泡，默认是冒泡（false），最小开始一次到大的父亲，
+        // 同等级的时候，按先后顺序
+
+        // one与on
+        function f3(){
+            console.log(1)
+            xxx.removeEventListener('click',f3)
+        }
+        xxx.addEventListener('click',f3)
+    </script>
+
+    
+
+
+</body>
+</html>

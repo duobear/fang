@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>状态机 无缝轮播   从31-2(4）的版本优化的</title>
+    <link rel="stylesheet" href="./style-yh.css">
+</head>
+<body>
+    <div class="window">
+        <div class="images">
+            <img src="./1.png" alt="图片" width="400" height="300">
+            <img src="./2.png" alt="图片" width="400" height="300">
+            <img src="./3.png" alt="图片" width="400" height="300">
+        </div>
+    </div>
+    <script src="./jquery-3.5.1.min.js"></script>
+    <script>    
+        let n
+        cshinit()//初始化   
+        setInterval(() => {
+            // $(`.images>img:nth-child(${x(n)})`).removeClass('current').addClass('leave')
+            // makeLeave($(`.images>img:nth-child(${x(n)})`))   
+            makeLeave(getIimage(n)) 
+                .one('transitionend',(e)=>{
+                    // $(e.currentTarget).removeClass('leave').addClass('enter')
+                    makeEnter($(e.currentTarget))
+            })
+            // $(`.images>img:nth-child(${x(n+1)})`).removeClass('enter').addClass('current')
+            // makeCurrent($(`.images>img:nth-child(${x(n+1)})`))
+            makeCurrent(getIimage(n+1))
+            n+=1
+        }, 3000);
+
+        function getIimage(n){
+            return $(`.images>img:nth-child(${x(n)})`)
+        }
+
+        function x(n){
+            if(n>3){
+                n=n%3
+                if(n===0){
+                    n=3
+                }
+            }// n=1 2 3 
+            return n
+        }
+
+        function cshinit(){
+            n=1
+            $(`.images>img:nth-child(${n})`).addClass('current')
+                .siblings().addClass("enter")
+        }
+        function makeCurrent($node){
+            $node.removeClass('enter leave').addClass('current')
+            return $node
+        }
+        function makeLeave($node){
+            $node.removeClass('enter current').addClass('leave')
+            return $node
+        }
+        function makeEnter($node){
+            $node.removeClass('leave current').addClass('enter')
+            return $node
+        }
+
+    </script>
+
+    
+
+
+</body>
+</html>
