@@ -60,12 +60,12 @@
             allButtons.eq(n).addClass('red').siblings('.red').removeClass('red')
           })
       }
+
+        // allButtons[n%3]是dom对象
+        // allButtons.eq(n%3),jquery提供的api，eq，eq找出对于的dom，封装成jquery
+        // trigger帮你点，触发click
       var n=0;
       var size=allButtons.length
-// allButtons[n%3]是dom对象
-// allButtons.eq(n%3),jquery提供的api，eq，eq找出对于的dom，封装成jquery
-// trigger帮你点，触发click
-
       allButtons.eq(n%size).trigger('click').addClass('red').siblings('.red').removeClass('red')
 
       var timrID=setInterval(() => {
@@ -83,7 +83,7 @@
           n+=1
           allButtons.eq(n%size).trigger('click').addClass('red').siblings('.red').removeClass('red')
           
-        }, 3000);
+        }, 1000);
       })
 
         
