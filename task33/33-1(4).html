@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./jquery-3.5.1.min.js"></script>
+    
+    <title>dom事件,没有添加阻止事件的bug，</title>
+    <style>
+        .wrapper{
+            position: relative;
+            display: inline-block;
+        }
+        .popover{
+            border:1px solid red;
+            position: absolute;
+            left: 100%;
+            top:0;
+            white-space: nowrap;
+            padding: 10px;
+            margin-left: 10px;
+            background: white;
+            display: none;
+        }
+        .popover::before{
+            position: absolute;
+            right: 100%;
+            top:5px;
+            border:10px solid transparent;
+            border-right-color: red;
+            content:'';
+        }
+        .popover::after{
+            position: absolute;
+            right: 100%;
+            top:5px;
+            border:10px solid transparent;
+            border-right-color: white;
+            content:'';
+            margin-right: -1px;
+        }
+    </style>
+</head>
+<body>
+   <!-- 处理clickme的时候，里面在doument在添加，然后再进入到doument处理的时候，把自己坑了 -->
+   <!-- 这bug是因为冒泡的过程，添加了监听事件 -->
+   <!-- 两个修复bug，一个是默认停播，到儿子就结束，一个是定时等会setTimeout， -->
+   
+    <div id="wrapper" class="wrapper">
+        <button id="clickMe">点我</button>
+        <div id="popover" class="popover">
+            <input type="checkbox">浮层
+        </div>
+    </div>
+
+
+    <script>
+        $("#clickMe").on('click',function(){
+            $("#popover").show()
+
+            setTimeout(function(){
+
+                $(document).one('click',function(){
+                console.log("document")
+                $("#popover").hide()
+                })
+             },0)
+        })
+    
+
+        // $("#wrapper").on('click',function(e){            
+        //     e.stopPropagation();
+        // })  隐藏啦
+        
+
+    //    $(document).on('click',function(){
+    //        console.log("因为有settime，要我这个搞完了，再去setTimout的里面的，但是里面的不执行了，等用户下一次点击才会执行")
+    //    })
+
+        
+    </script>
+
+</body>
+</html>

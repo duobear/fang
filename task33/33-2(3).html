@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无线无缝轮播+按钮可以自由切换</title>
+    <script src="./jquery-3.5.1.min.js"></script>
+   
+    <style>
+        *{margin: 0;padding:0;}
+        *{box-sizing: border-box;}
+
+        .window{
+            width: 400px;
+            height: 300px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        .images{
+            display: flex;
+            transition: all 1s;
+        }
+        .images>img{
+            width: 100%;
+          
+          
+        }
+       
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div id="sildes" class="images">
+            <img src="./1.png" alt="图片" width="400" height="300">
+            <img src="./2.png" alt="图片" width="400" height="300">
+            <img src="./3.png" alt="图片" width="400" height="300">
+        </div>
+    </div>
+    <div id="buttonWraper" style="text-align: center;">
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+    </div>
+
+    
+    <script>       
+    // clone  append添加到最后   prepend添加到最前面
+    // 原始有3个，默认就是0，后面的一次是调整400
+    // js有添加两个，因此整体还要再次调整400
+    // 初始位置从0，变成-400
+    // offset，如果你想知道一个东西的位置，所有位置算一下，offset会算，以后hide和show没有反应就可以用offset了，小技巧
+
+        let $buttons=$("#buttonWraper>button")
+        let $sildes=$("#sildes")
+        let $images=$sildes.children('img')
+        let $firstCopy=$images.eq(0).clone(true)
+        let $lastCopy=$images.eq($images.length-1).clone(true)
+        $sildes.append($firstCopy)
+        $sildes.prepend($lastCopy)
+
+        $sildes.css({transform:'translateX(-400px)'})
+
+        console.log($firstCopy[0].outerHTML)
+        console.log($lastCopy[0].outerHTML)
+        let current=0
+        $buttons.eq(0).on('click',function(){
+            if(current==2){
+                console.log("是从最后一张到第一张")
+                $sildes.css({transform:'translateX(-1600px)'})
+                .one('transitionend',function(){
+                    $sildes.hide().offset()
+                    $sildes.css({transform:'translateX(-400px)'}).show()
+                })
+            }else{
+
+            
+            console.log(current)
+            $sildes.css({transform:'translateX(-400px)'})
+            current=0
+            }
+        })
+        $buttons.eq(1).on('click',function(){
+            console.log(current)
+            $sildes.css({transform:'translateX(-800px)'})
+            current=1
+        })
+        $buttons.eq(2).on('click',function(){
+            if(current==0){
+                console.log("是从第一张到最后一张")               
+                $sildes.css({transform:'translateX(0px)'})
+                .one('transitionend',function(){
+                    $sildes.hide().offset()
+                 $sildes.css({transform:'translateX(-1200px)'}).show()
+                 })
+            }else{
+            console.log(current)
+            $sildes.css({transform:'translateX(-1200px)'})
+            current=2
+        }
+        })
+
+
+    </script>
+
+    
+
+
+</body>
+</html>

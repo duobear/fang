@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dom事件</title>
+    <style>
+        .wrapper{
+            position: relative;
+            display: inline-block;
+        }
+        .popover{
+            border:1px solid red;
+            position: absolute;
+            left: 100%;
+            top:0;
+            white-space: nowrap;
+            padding: 10px;
+            margin-left: 10px;
+            background: white;
+            display: none;
+        }
+        .popover::before{
+            position: absolute;
+            right: 100%;
+            top:5px;
+            border:10px solid transparent;
+            border-right-color: red;
+            content:'';
+        }
+        .popover::after{
+            position: absolute;
+            right: 100%;
+            top:5px;
+            border:10px solid transparent;
+            border-right-color: white;
+            content:'';
+            margin-right: -1px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 爷爷fn1(fn11)  爸爸fn2(fn22)  儿子fn3(fn33) -->
+    <!-- 两个过程 但是都需要用到addEventListener -->
+    <!-- 过程1：true，fn1,fn2,fn3 -->
+    <!-- 过程2：flase或者不写 ,fn33,fn22,fn11 -->
+    <!-- 特例，若是fn3和fn33同时存在，那就是谁先添加谁先调，与左右无关 -->
+
+    <!-- 需求：点击别处，关闭浮层   bootstrap popopver  - 别处，不包括浮层自己-->
+    
+    <!-- 监听body页面的click，要注意body的高度,因为没有高度，最好用文档doucument，或者html，doucument.doucument.Element来代替区域 -->
+
+    <!-- 属于冒泡，因此虽然js都运行了，但是最后none会覆盖，不是我们要的效果，需要把儿子stopPropagatioin()停止传播 -->
+    <!-- 阻止冒泡  stopPropagation（）停止传播-->
+    <!-- preventdefault 阻止默认事件 -->
+
+   
+    <div id="wrapper" class="wrapper">
+        <button id="clickMe">点我</button>
+        <div id="popover" class="popover">
+            浮层
+        </div>
+    </div>
+
+
+    <script>
+        clickMe.addEventListener('click',function(e){
+            popover.style.display="block"
+            // e.stopPropagation() 父亲有了，儿子的可以隐藏
+        })
+        wrapper.addEventListener('click',function(e){            
+            e.stopPropagation()
+        })
+
+        document.addEventListener('click',function(){
+            popover.style.display="none"
+        })
+      
+    </script>
+
+</body>
+</html>

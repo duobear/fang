@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无线无缝轮播+按钮可以自由切换</title>
+   
+    <style>
+        *{margin: 0;padding:0;}
+        *{box-sizing: border-box;}
+
+        .window{
+            width: 400px;
+            height: 300px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        .images{
+            position: relative;
+        }
+        .images>img{
+            width: 100%;
+            transition: all 0.3s;
+            position: absolute;
+            top: 0;
+        }
+        .images>img.current{
+            left: 0;
+            transform: translateX(0);
+            z-index: 1;
+        }
+        .images>img.leave{
+            transform: translateX(-100%);
+            z-index: 1;
+        }
+        .images>img.enter{
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="images">
+            <img src="./1.png" alt="图片" width="400" height="300">
+            <img src="./2.png" alt="图片" width="400" height="300">
+            <img src="./3.png" alt="图片" width="400" height="300">
+        </div>
+    </div>
+
+    <script src="./jquery-3.5.1.min.js"></script>
+    <script>   
+    
+    // 就是在原有的基础上，创建一个虚拟的1，和虚拟的最后一个
+    // 其他的都正常走
+    // 为防止在第一个点左，最后一个点右，因此需要在第一个左添加6，最后一个后边添加1，添加的都是假的
+    // 播放的时候放的是假的，播完后就放真的
+    // 废弃掉js，因此重新搞个html
+
+
+        let n
+        cshinit()
+       let timer=setInterval(() => {            
+            makeLeave(getIimage(n)) 
+                .one('transitionend',(e)=>{
+                   
+                    makeEnter($(e.currentTarget))
+            })          
+            makeCurrent(getIimage(n+1))
+            n+=1
+        }, 3000);
+        // 监听有没有切换事件，然后判断页面，切走是true，切回到当前页面是false
+        document.addEventListener('visibilitychange',function(e){
+            if(document.hidden){
+                window.clearInterval(timer)
+            }else{
+                timer=setInterval(() => {            
+                    makeLeave(getIimage(n)) 
+                    .one('transitionend',(e)=>{                   
+                        makeEnter($(e.currentTarget))
+                    })          
+                makeCurrent(getIimage(n+1))
+                n+=1
+                }, 3000);
+            }
+
+        })
+
+        function getIimage(n){
+            return $(`.images>img:nth-child(${x(n)})`)
+        }
+
+        function x(n){
+            if(n>3){
+                n=n%3
+                if(n===0){
+                    n=3
+                }
+            }// n=1 2 3 
+            return n
+        }
+
+        function cshinit(){
+            n=1
+            $(`.images>img:nth-child(${n})`).addClass('current')
+                .siblings().addClass("enter")
+        }
+        function makeCurrent($node){
+            $node.removeClass('enter leave').addClass('current')
+            return $node
+        }
+        function makeLeave($node){
+            $node.removeClass('enter current').addClass('leave')
+            return $node
+        }
+        function makeEnter($node){
+            $node.removeClass('leave current').addClass('enter')
+            return $node
+        }
+
+    </script>
+
+    
+
+
+</body>
+</html>
