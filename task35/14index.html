@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <link rel="stylesheet" href="./style.css">
+
+    <title>约定格式,改变callbackName，和定义的函数名字</title>
+</head>
+<body>
+    <h5>您的账户余额是<span id='amount'>&&&amount&&&</span></h5>
+    <button id='button'>打钱</button>
+    <script>
+        //  window.yyy=function(result){
+        //     alert('这个是frank写的前端代码')
+        //     alert(`我得到结果是${result}`)
+        //     alert(result.success)
+        //     alert(result.left)
+        //     window.location.reload()
+        // }
+
+
+        // window.yyy=function(result){
+        //     if(result==='success'){
+        //         // window.location.reload()
+        //         amount.innerText=amount.innerText-1               
+        //     }else{
+
+        //     }
+        // }
+        
+ button.addEventListener('click',(e)=>{            
+            let script=document.createElement('script')
+            let functionName='frank'+parseInt(Math.random()*10000,10)
+           
+            window[functionName]=function(result){ 
+                       
+                if(result.success===true){
+                amount.innerText=amount.innerText-1
+                }else{
+
+                }
+            }         
+           //script.src='http://jack.com:8002/pay?callbackName=yyy'
+            script.src='http://jack.com:8002/pay?callback='+functionName
+
+            document.body.appendChild(script)
+           
+            script.onerror=function(e){
+                alert('fail')
+                e.currentTarget.remove()
+
+            }
+            script.onload=function(e){
+                // debugger
+                e.currentTarget.remove()
+                
+            }
+
+
+
+        })
+    </script>
+</body>
+</html>

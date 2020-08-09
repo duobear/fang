@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <link rel="stylesheet" href="./style.css">
+
+    <title>iframe解决,手动点击返回问题，但是需要手动刷新当前页面</title>
+</head>
+<body>
+    <h5>您的账户余额是<span id='amount'>&&&amount&&&</span></h5>
+    <form action="/pay" method="POST" target="result">
+     
+        <input type="submit" value="付款">
+    </form>
+    <iframe name="result" src="about:blank" frameborder="0"></iframe>
+
+  
+  
+</body>
+</html>

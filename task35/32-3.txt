@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>请求的各种方式</title>
+</head>
+<body>
+    <h1>图片请求的回顾</h1>
+    <p>
+    回顾一下，就是历史图片请求，图片只有get，因此服务器接收到这个get的路径，进行处理
+    处理成功的头部是200，处理失败的头部是400，前端页面根据头部的信息进行成功或者失败的数据处理
+    前端成功的路，就是把结果显示在页面上，有两种，一种是自动刷新 window.location.reload()
+    另一个就是amount.innerText=amount.innerText-1
+
+
+    升级7：script请求，
+    新建7index.html
+    新建7server.js    
+    script的请求，地址是先在后端，然后在前端，因此可以优化成都在前端
+    script必须要body添加
+    每运行一次，前端页面就会多出一个script的标签
+
+    升级8：script请求，（处理成后端返回一个前端代码给前端，然后前端运行，前端原本的成功可以隐藏，用后端送过来的成功）
+    新建8index.html
+    新建8server.js
+    但是因为要删除多余的script，因此前端原本的成功还是需要的
+    e.currentTarget.remove()
+    
+
+    </p>
+
+
+
+</body>
+</html>

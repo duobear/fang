@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <link rel="stylesheet" href="./style.css">
+
+    <title>解耦-后端熟悉前端，直接用函数名</title>
+</head>
+<body>
+    <h5>您的账户余额是<span id='amount'>&&&amount&&&</span></h5>
+    <button id='button'>打钱</button>
+    <script>
+         window.xxx=function(result){
+            alert('这个是frank写的前端代码')
+            alert(`我得到结果是${result}`)
+            window.location.reload()
+        }
+        
+ button.addEventListener('click',(e)=>{
+            let script=document.createElement('script')           
+            script.src='http://jack.com:8002/pay'
+            document.body.appendChild(script)
+           
+            script.onerror=function(e){
+                alert('fail')
+                e.currentTarget.remove()
+
+            }
+            script.onload=function(e){
+                // debugger
+                e.currentTarget.remove()
+                
+            }
+
+
+
+        })
+    </script>
+</body>
+</html>

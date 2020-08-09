@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用文件档数据库</title>
+</head>
+<body>
+git reset
+    <h1>理解初始化的init-server.js的文件</h1>
+    <p>
+        具体内容可以看init-server.js 
+        开启服务器用 node 文件名  端口号，如node init-server.js 8888，浏览器直接输入地址，就可以运行这个init-server.js，不管输入什么都是返回Hi
+        
+
+        升级1：主要理解server.js文件中的路径和文件名的区别
+        创建index1.html，-1index.html
+        变更init-server.js为server1.js -1server.js
+        创建style1.css-1style.css
+        创建mian1.js -main1.js 
+        在1index.html中写上style.css和main.js，但是由1server.js去处理，根据不同的路径访问不同的文件
+        例如在1index.html中的style.css的路径，访问1style.css文件
+
+
+        升级2：做个金额的加减，有个问题（页面一刷新还是100）
+        创建2index.html 
+        创建2server.js 
+
+
+        升级3：解决页面刷新还是100的问题，步骤1，页面初始数据从服务器中读取
+        新建一个db的文件，把初始数据存放到db
+        新建3index.html
+        新建3server.js
+
+        升级4：解决页面刷新还是100的问题，步骤2，数据进行加减后存放到db，因此需要请求（form请求）
+        新建4index.html 
+        新建4server.js 
+        每点击一次付款按钮就是触发一个post请求，请求后端处理，处理过程是
+        把db文件的数据-1，然后页面显示success，，点击返回，然后刷新页面后，页面显示减后的数据，体验不好
+        覆盖问题，需要点击返回后，刷新页面，才能看到新结果
+
+        升级5：体验不好，虽然刷新后数字掉，但是需要手动筛选，解决体验
+        用iframe，当前页面显示可以success，刷新当前页就可以显示了
+        新建5index.html 
+        新建5server.js
+        没有刷新问题，需要手动刷新才能看到新结果
+
+        升级6：模拟img图片请求,缺陷就是图片只能get，不能post
+        新建6index.html 
+        新建6server.js
+        因此server.js判断路径的时候就不要判断是get还是post了，然后在前端页面写上自动刷新代码
+        自动刷新的两种方式window.location.reload()
+        amount.innerText=amount.innerText-1
+
+
+
+
+        
+    </p>
+    
+</body>
+</html>
+

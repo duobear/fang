@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <link rel="stylesheet" href="./style.css">
+
+    <title>script发请求-处理后端返回的前端页面，以及移除多余script</title>
+</head>
+<body>
+    <h5>您的账户余额是<span id='amount'>&&&amount&&&</span></h5>
+    <button id='button'>打钱</button>
+    <script>
+        button.addEventListener('click',(e)=>{
+            let script=document.createElement('script')
+            script.src='/pay'
+            document.body.appendChild(script)
+            // script.onload=function(){
+            //     alert('success2')
+            //     window.location.reload()
+            //     amount.innerText=amount.innerText-1
+            // }
+            script.onerror=function(){
+                alert('fail')
+            }
+            script.onload=function(e){
+                // debugger
+                e.currentTarget.remove()
+                
+            }
+
+        })
+    </script>
+</body>
+</html>

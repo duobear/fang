@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <link rel="stylesheet" href="./style.css">
+
+    <title>用文件读数据，解决页面刷新后显示100的问题步骤1</title>
+</head>
+<body>
+    <h5>您的账户余额是<span id='amount'>&&&amount&&&</span></h5>
+    <button id='button'>付款1元</button>
+    <script>
+        button.addEventListener('click',(e)=>{
+            let n=amount.innerText
+            let number=parseInt(n,10)
+            let newNuber=n-1
+            amount.innerText=newNuber
+
+        })
+    </script>
+</body>
+</html>

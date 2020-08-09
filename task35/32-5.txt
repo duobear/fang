@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>请求另外一个网站</title>
+</head>
+<body>
+请求另外一个网站的pay路径（ script.src='http://alipy.com/pay?number=100&user=ff'）
+新建9index.html
+新建9server.js
+启动运行9server.js,发现前端的控制台是302，并且报错
+前端控制台会报错：Cross-Origin Read Blocking (CORB)
+
+
+仿造并开启两个账号
+在我们电脑的hosts中，文件路径就是C:\Windows\System32\drivers\etc
+在文件里现在两句话
+127.0.0.1 frank.com 
+127.0.0.1 jack.com  
+新建10index.html  10server.js
+其中index页面中是写成请求script.src='http://jack.com:8002/pay'
+开启两个server
+node 10server.js 8001
+<<<http://localhost:8001
+同等于http://frank.com:8001
+node 10server.js 8002
+<<<http://jack.com:8002
+创建10index.html,和10server.js
+开启后两个服务器server后，在浏览器中输入，在地址栏输入http://frank.com:8001
+从frank网址，来请求，用frank的后台来处理数据
+
+解耦
+创建11index.html
+创建11server.js
+利用调用函数来解耦，执行过程就是pay1-xxx函数中的跳转，xxx函数是前端定义的，
+后端比较了解，就是直接response.write(` xxx.call('undefined','success')  
+
+解耦2-升级版调用传过来的函数名
+创建12index.html 
+创建12server.js
+后端只要获取，就知道函数名，不需要自己熟悉代码，做到真正的解耦
+前端只需要成功后刷新页面就可以了
+
+
+后端处理返回一个对象，要符合json语法，之前都是返回的字符串“success”
+创建13index.html
+创建13server.js
+后端获取，前端请求地址中的函数名，${query.callbackName}.call('undefined',{  
+        "success":true,
+        "left":${newAmount}
+        })    
+      `)
+前端返回的数据是result = {success: true, left: 62}
+
+
+约定格式
+创建14index.html
+创建14server.js
+1:callbackName---->callback 
+2.yyy-》随机数 JQuery1,2,3,4,5（）
+
+
+jquery格式请求的约定格式
+创建15index.html
+创建15server.js
+前端很方便，后端很方便
+
+
+
+对jsonp的理解
+ jsonp
+ 请求方：frank。com的前端程序员（浏览器）
+ 响应方：jack。com的后端程序员（服务器）
+
+ 1：请求方需要创建script标签，然后src指向响应方，src里面要传一个查询参数 ？callbackName=xxx
+ 2：响应方根据callbackName，构造形如
+    1.xxx。call（undefine，’你要的数据‘）
+    2.xxx（’你要的数据‘） 
+    这样的响应，其中xxx是可变
+3：浏览器接收到响应，就会执行 xxx。call（undefined，’你要的数据‘）
+4：那么请求方就知道他要的数据
+这个就是jsonp
+
+
+jsonp为什么不支持post请求？
+jsonp是通过动态创建script标签，
+script标签只能用get请求
+
+
+</body>
+</html>

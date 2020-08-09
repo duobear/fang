@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>加减运算</title>
+</head>
+<body>
+    <h5>您的账户余额是<span id='amount'>100</span></h5>
+    <button id='button'>付款1元</button>
+    <script>
+        button.addEventListener('click',(e)=>{
+            let n=amount.innerText
+            let number=parseInt(n,10)
+            let newNuber=n-1
+            amount.innerText=newNuber
+
+        })
+    </script>
+</body>
+</html>
