@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>link标签请求</title>
+</head>
+<body>
+    <script>
+        var link=document.createElement('link')
+        link.rel='stylesheet'
+        link.href='/xxx'
+        document.head.appendChild(link)
+        link.onload=function(){
+            console.log('s')
+        }
+        link.onerror=function(){
+            console.log('f')
+        }
+    </script>
+
+
+    在js.jirengu.com里看浏览器的Network
+    
+</body>
+</html>

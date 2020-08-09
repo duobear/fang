@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>同源策略与CORS跨域</title>
+</head>
+<body>
+    
+
+表单没有跨域问题，ajax有跨域问题
+
+表单请求另一个域baidu，只要，form action=”网址“ method=”get“
+浏览器的f12  preserve log，看到200，成功
+
+用ajax试一下，请求成功200，但是，console的控制台，有一个错误，not allow，看不到respons
+
+
+
+只有协议+端口+域名 这个三个一摸一样才允许发ajax请求
+
+http：//baidu.com   http：//www.baidu.com
+
+http://baidu.com:80   http://baidu.com:81
+
+
+百度的后台加上这句话，那就可以跨上了
+
+response.setHeader('Access-Control-Allow-Origin','http://zqf.com:8001')
+
+
+cross-origin  resource sharing
+
+</body>
+</html>
