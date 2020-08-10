@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对jsonp的理解</title>
+</head>
+<body>
+
+    对jsonp的理解
+
+ 请求方：frank。com的前端程序员（浏览器）
+ 响应方：jack。com的后端程序员（服务器）
+
+ 1：请求方需要创建script标签，然后src指向响应方，src里面要传一个查询参数 ？callbackName=xxx
+ 2：响应方根据查询参数callbackName，构造形如
+    1.xxx.call（undefine，'你要的数据'）
+    2.xxx（'你要的数据'） 
+    这样的响应
+3：浏览器接收到响应，就会执行 xxx.call（undefined，'你要的数据'）
+4：那么请求方就知道他要的数据
+
+    
+</body>
+</html>
