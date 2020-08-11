@@ -16,7 +16,6 @@
         nodes.html=function(){}
         return nodes
     }
-
     window.jQuery.ajax=function(url,method,body,succFn,failFn){
         let request=new XMLHttpRequest()   
         request.open(method,url) //请求方式
@@ -27,27 +26,21 @@
                     succFn.call(undefined,request.responseText)
                 
                 }else if(request.status>=400){
-                    failFn.call(undefined,request)
-                    
+                    failFn.call(undefined,request)                    
                 }
             }
-
         }
     }
-
     window.$=window.jQuery
 
-    myButton.addEventListener("click",(e)=>{
-    
+    myButton.addEventListener("click",(e)=>{    
         window.jQuery.ajax(
             '/xxx',
             'post',
             'a=1&b=2',
             (responseText)=>{console.log(1)},
             (request)=>{console.log(2)}
-        )
-    
-
+        )  
     })
     </script>
 </body>

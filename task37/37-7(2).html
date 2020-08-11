@@ -13,39 +13,29 @@
             nodes.addClass=function(){}
             nodes.html=function(){}
             return nodes
-        }
-
-      
-        window.jQuery.ajax=function({url,method,body,headers}){           
-           
+        }      
+        window.jQuery.ajax=function({url,method,body,headers}){  
             return new Promise(function(resolve,reject){
                 let request=new XMLHttpRequest()   
                 request.open(method,url) //请求方式
-
                 for(let key in headers){
                     let value=headers[key]
                     request.setRequestHeader(key,value)
-                }
-                
+                }                
                 request.onreadystatechange=()=>{                                    
                     if(request.readyState===4){           
                         if(request.status>=200&&request.status<300){
                             resolve.call(undefined,request.responseText)   
-                            console.log("c")                    
-                        
+                            console.log("c")   
                         }else if(request.status>=400){
                             reject.call(undefined,request)
-                            console.log("d")  
-                            
+                            console.log("d")                              
                         }
                     }
-
                 }
-                request.send(body)                              
-
+                request.send(body)  
             })
         }
-
         window.$=window.jQuery
 
         function success(responseText){
@@ -63,8 +53,7 @@
                 headers:{
                     'content-type':'application/x-wwww-form-urlencoded',
                     'frank':'18'
-                },
-                 
+                },                 
             })
             promise.then( success,fail)
         })
