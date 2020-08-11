@@ -22,18 +22,14 @@ var server = http.createServer(function(request, response){
   console.log('方方说：含查询字符串的路径\n' + pathWithQuery)
 
   if(path === '/'){    
-    let string=fs.readFileSync('./Allow-Origin.html','utf-8')
+    let string=fs.readFileSync('./index12.html','utf-8')
     response.statusCode=200
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
     response.write(string)
     response.end()    
   }else if(path==='/xxx'){
     response.statusCode=200
-    response.setHeader('Content-Type','text/xml; charset=utf-8')
-    //前端请求其他的网站，对应网站服务器同意
-    response.setHeader('Access-Control-Allow-Origin','http://frank.com:8001')
-
-    
+    response.setHeader('Content-Type','text/xml; charset=utf-8')   
     
     // xml格式返回
     // response.write(`   
@@ -64,7 +60,10 @@ var server = http.createServer(function(request, response){
   }else{
     response.statusCode = 404
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    response.write('呜呜呜')
+    // response.write('呜呜呜')
+    response.write(`
+    "error":"not found"
+    `)
     response.end()
   }
 

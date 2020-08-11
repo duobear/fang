@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一次了解Promise</title>
+</head>
+<body>
+
+    多个库就会存在问题
+
+    frank.ajax({
+        成功：function（）{}，
+        失败：function（）{}
+    })
+
+    jack。ajax（null，null，null，successFn，failFn）
+
+    fs。readFile（funciton（）{}
+    ）
+
+
+    不看文档，怎么知道穿过来的函数名是什么
+
+
+    然后我们要顶一个规范，就是promise
+    确定函数形式的规范
+
+    promise第一个意义在于不用取名字，标准化
+    若是有两个函数，就再then
+
+
+    return new Promise(function(resolve,reject){})
+
+
+
+    window.Promise=function(fn){
+        return{
+            then:function(){}
+        }
+    }
+    
+    
+</body>
+</html>

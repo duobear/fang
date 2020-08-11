@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>引入jquery，简化then，promise</title>
+</head>
+<body>
+    <button id="myButton">点我</button>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script> 
+        function success(responseText){
+            console.log(responseText)
+        }
+        function fail(request){
+            console.log(request)
+        }
+
+        myButton.addEventListener("click",(e)=>{         
+           $.ajax({
+                url:'/xxx',
+                type:'get',   
+                dataType:"json",   //返回格式为json                      
+            }).then(
+                (responseText)=>{console.log(responseText)},
+                (request)=>{console.log('error')},          
+            
+            ).then(
+                (responseText)=>{console.log('成功2')},
+                (request)=>{console.log('errr2')},          
+            
+            )
+
+        })
+ 
+
+       
+
+  
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>引入jquery，promise前提</title>
+</head>
+<body>
+    <button id="myButton">点我</button>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script> 
+        function f1(responseText){}
+        function f2(responseText){}
+
+        myButton.addEventListener("click",(e)=>{         
+            $.ajax({
+                url:'/xxx',
+                type:'get',
+                dataType:"json",
+                
+                
+                success:(x)=>{    
+                    console.log("前端成了")                                  
+                    f1.call(undefined,x)
+                    f2.call(undefined,x)
+                },
+                error:(x)=>{                    
+                    console.log(x)
+                    console.log(x.status)
+                    console.log(x.responseText)
+                    
+                } 
+            })
+
+        })
+
+  
+    </script>
+</body>
+</html>

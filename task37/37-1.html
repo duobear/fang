@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS操作请求与响应</title>
+</head>
+<body>
+
+    请求
+    前端代码的每一个字，都有http请求里面的相关字段映射
+     
+    第一部分：request.open('POST',"/xxx")
+    第二部分：request.setRequestHeader('frank','18')
+             request.setRequestHeader('Content-Type','x-www-form-urlencoded')
+
+    第三部分：换行
+    第四部分：request.send('a=1&b=2')
+             request.send("我偏要设置第四部分")
+******************************************************浏览器的结果
+POST /xxx HTTP/1.1
+Host: localhost:8888
+Connection: keep-alive
+Content-Length: 27
+frank: 18
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36
+Content-Type: text/plain;charset=UTF-8
+Accept: */*
+Origin: http://localhost:8888
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8888/
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+    
+
+
+
+响应
+第一部分：request.status /request.statusText
+第二部分：request.getResponseHeader('content')/request.getAllResponseHeaders()
+
+第四部分：request.responseText
+
+
+
+
+
+ ******************************************************浏览器的结果
+HTTP/1.1 200 OK
+Content-Type: text/xml; charset=utf-8
+Date: Mon, 10 Aug 2020 07:44:22 GMT
+Connection: keep-alive
+Transfer-Encoding: chunked
+
+
+
+    
+</body>
+</html>

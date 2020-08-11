@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>升级封装jQuery.ajax-Promise</title>
+</head>
+<body>
+    <button id="myButton">点我</button>
+    <script>
+        window.jQuery=function(nodeOrSelector){
+            let nodes={}
+            nodes.addClass=function(){}
+            nodes.html=function(){}
+            return nodes
+        }
+
+      
+        window.jQuery.ajax=function({url,method,body,headers}){           
+           
+            return new Promise(function(resolve,reject){
+                let request=new XMLHttpRequest()   
+                request.open(method,url) //请求方式
+
+                for(let key in headers){
+                    let value=headers[key]
+                    request.setRequestHeader(key,value)
+                }
+                
+                request.onreadystatechange=()=>{                                    
+                    if(request.readyState===4){           
+                        if(request.status>=200&&request.status<300){
+                            resolve.call(undefined,request.responseText)   
+                            console.log("c")                    
+                        
+                        }else if(request.status>=400){
+                            reject.call(undefined,request)
+                            console.log("d")  
+                            
+                        }
+                    }
+
+                }
+                request.send(body)                              
+
+            })
+        }
+
+        window.$=window.jQuery
+
+        function success(responseText){
+            console.log(responseText)
+        }
+        function fail(request){
+            console.log(request)
+        }
+
+        // 直接不要obj变量，直接传对象
+        myButton.addEventListener("click",(e)=>{ 
+           let promise= window.jQuery.ajax({
+                url:'/xxx',
+                method:'get',
+                headers:{
+                    'content-type':'application/x-wwww-form-urlencoded',
+                    'frank':'18'
+                },
+                 
+            })
+            promise.then( success,fail)
+        })
+    </script>
+</body>
+</html>
