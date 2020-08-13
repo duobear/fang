@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVC的Model</title>
+</head>
+<body>
+    view （视图）            controller（逻辑其他）     model（数据）
+
+
+
+    换功能划分代码
+
+
+    人看视图view-----通知------controller------------调用-----------------model------------请求----------server
+server------响应--------通过model-------返回数据给------controller-----------监听、更新--------view
+
+
+
+MVC
+
+写代码的思想
+
+
+MVC全名是Model View Controller，是一种软件设计模式
+其中可分为模型(model)－视图(view)－控制器(controller)三要素，
+
+模型(model)，模型的主要作用为数据的接受和发送设定规则。
+视图(view)，即用户接触的部分，用户看到并与之交互。
+控制器(controller)，控制器接受用户的输入并调用模型和视图去完成用户的需求，所以当单击Web页面中的超链接和发送HTML表单时，控制器本身不输出任何东西和做任何处理。它只是接收请求并决定调用哪个模型构件去处理请求，然后再确定用哪个视图来显示返回的数据。
+当用户与试图发生交互时，实际发生了下列过程
+
+即：
+
+控制器（controller）监听视图（view）.
+用户与视图（view）交互，通知控制器（controller）调用模型（model）再请求服务器（server）.
+从而服务器（server）响应给模型（model），再返回数据给控制器（controller）再更新视图（view).
+控制器（controller）回到监听状态.
+
+
+它的大致结构为：
+把main.js之类的js文件根据功能划分成若干模块，
+对于每个模块，都用mvc模式,后面可用面向对象完善
+先用立即执行函数!function(){内容}.call()，将内容包裹起来，减少空间使用，若需要js之间的互相调用
+可用window.xxx来命名内部变量即可。
+举个例子：
+
+!function(){
+var view=document.querySelector('.leaveMessage')
+    var model={
+        init:function(){
+            ...
+            });
+        },
+        get:function(){
+            ...
+        },
+        set:function(){
+            ...
+              })   
+        }
+    }
+    var controller={
+        view:null,
+        model:null,
+        myForm:null,
+        init:function(view,model){
+            this.view=view
+            this.model=model
+            this.myForm =view.querySelector('#xxxxxx')
+            this.model.init()
+            this.loadMessage()
+            this.bindEvents() 
+        },
+        bindEvents:function(){
+        ...
+        },
+        loadMessage:function(){
+        ...         
+        },
+        saveMessage:function(){
+        ...       
+        }
+    }
+    controller.init(view, model) 
+    
+}.call()
+
+
+
+    
+</body>
+</html>

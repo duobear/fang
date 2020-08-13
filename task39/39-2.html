@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>引入LeanCloud</title>
+</head>
+<body>
+
+    若是手机访问后，手机是看不到数据的，因此保存数据的只能放服务器，这样的话，就不受设备的影响
+
+    买服务器,leancloud网址
+    http-server -C -1
+    登录leancloud，创建一个应用，名字叫resume-2019-1 
+    就是一个数据库，创建一个claassname   ，message，默认的设置即可
+
+    存储-结构化数据-创建 Class-Message
+    右上角-帮助-快速入门，sdk
+安装sdk
+  可以直接在页面中通过 script 标签引入我们的 SDK：
+  引入后，http-server -c -1  在控制台打AV,就能看到我们已经引入了
+
+初始化
+  新建一个js，名字叫message。js，把网站中的初始化的
+  AV.init({
+    appId: "zc9VXE4qX92iVzjSCWD5TTKG-gzGzoHsz",
+    appKey: "jDzk7zz4iDbAQ63IyhOfSdxG",
+   
+  });
+
+  粘贴到js中，并且index.html需要引入这个message.js
+
+
+验证+代码创建testObject表，在表里创建一行数据，数据内容就是words：hello wrod
+  验证数据库
+    ping tsdnap9s.api.lncld.net
+
+
+    var TestObject = AV.Object.extend('TestObject');
+    var testObject = new TestObject();
+    testObject.save({
+        words:'hello wored'
+    }).then(function(object){
+        alert('leancloud rocks!!!')
+    })
+
+    字段：值，，组成表，，很多个表组成数据库
+    一个数据库，很多个表组成
+    一个表，很多个字段组成
+
+
+1：创建一个应用 resume-2018-1
+2：引入 av-min.js,达到window.AV 
+3:初始化AV对象（代码直接拷）
+4：新建一条数据（代码直接拷）
+
+promise,,,then就是成功调用第一个，失败调用第二个
+query.find({success:fn1,fail:fn2})
+query.find()
+.then(
+    fn1,fn2
+    )
+
+
+把message.js,中的代码，用mvc模式
+
+m来告诉程序
+mvc组织代码的思想，把v和m传给c，c初始化m，操作v，然后每次操作都是用户点击，会触发contrl的属性
+
+
+    
+</body>
+</html>
