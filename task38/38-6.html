@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闭包的使用</title>
+</head>
+<body>
+    前提是为了各个模块的变量只能各个模块使用，因此要用！function（）{}.call()来包裹，这样就各自不影响
+    但是现在有一个需求，就是，需要使用其中的变量
+
+    映入module1.js   module2.js 
+
+    1：
+
+    ！function（）{
+        var person=window.person={
+            name:'frank'
+        }
+        console.log(person)
+        console.log(window.person)//不同变量，但是存同一个地址
+    }.call()
+
+
+    ！function（）{
+        var person={
+            name:'frank',
+            age:18
+        }
+        window.frankGrowUp=function(){
+            person.age+=1
+            return person.age
+        }
+       
+    }.call()
+
+
+    var accessor=function(){
+        var person={
+            name:'frank',
+            age:18
+        }
+        return function(){
+            person.age+=1
+            return person.age
+        }
+    }    
+    var growUP=accessor.call()
+    growUP.call()
+
+
+
+    2：
+
+    ！function（）{
+        var person=window.person
+        content.log(person)
+       
+    }.call()
+
+
+    ！function（）{
+        var newAge=window.frankGrowUp()
+        console.log(newAge)       
+    }.call()
+
+
+
+
+    1.立即执行函数使得 persion 无法被外部访问
+    2.闭包使匿名函数可以操作persion
+    3：window。frankGrowup 保存了匿名函数的地址
+    4：任何地方都可以使用 window。frankgrowup
+=》任何地方都可以使用window。frankgrowup 操作persion，但是不能直接访问person
+</html>   

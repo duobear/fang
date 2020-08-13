@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块化</title>
+</head>
+<body>
+    CRM
+    copy  run  modify
+    抄    运行  改html，css js
+
+
+    MVC
+    model  view  control
+    模型    视图  控制
+
+
+    新建一个js目录，在js目录新建一个swiper。js，然后改成init_swiper.js ,，用文件名代表，然后把html里的对应js移动到init_swiper.js里面去
+    然后在html里，引入这个init_swiper.js
+
+    
+    新建一个auto-slide-up.js,
+    先在html页面中把window.onscroll = function (xxx) {}，函数里的动作，
+    拆分成两个动作，用addEventListener拆分，里面的两个其中一个是需要放js的
+   拆分后，把html中的相关代码，如找到特殊元素，然后给他移除，并且滚动再次移除代码放js里面，包括移除的函数也要放入，然后html引入这个js
+
+
+   新建一个sticky-topbar.js,把刚才拆分的剩下的代码放到这个js，然后html中引入这个js
+
+   新建一个smoothly-navigation.js,html里剩下的js的代码都放在这里了
+
+
+   为什么乱，因为代码多啊
+   用var声明是全局变量，用let的不是
+
+   因此要用局部变量
+   {}包括起来没有用，这个会变量提升，把var提升了，相当于还是在外面，是全局变量
+   因此用fucntion xxx（）{}用函数包裹起来，这样就是局部变量了
+   执行就是xxx（）或者xxx。call（）
+但是xxx是全局的，因此就写成funciotn（）{}。call（）
+
+但是浏览器会报错这个写法，因此试出来一个写法，！funciton（）{}。call（），只改变返回值，但我们不在乎返回值
+还可以在这个整个的。前面加上小括号
+
+这样就能使得各管各的
+
+那如果想资源共享怎么办，就把资源放window，这样也是可以的
+module-1.js   module-2.js  
+
+
+1就是用立即的这个方法
+2的js怎么读取这个1的里面的数据
+
+
+立即执行函数使得person 无法被外部访问
+闭包使得匿名函数可以操作person
+window。frankGROWuP 保存了匿名函数的地址
+任何地方都可以使用window.frankGROWup,
+任何地方都可以使用window.frankGROWup,操作persion ，但是不能直接访问person
+
+
+function的this就是触发的元素，bind（this）用的this就是上面调用的对象
+
+箭头函数没有this，因此用this的就是调用上面的对象
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
