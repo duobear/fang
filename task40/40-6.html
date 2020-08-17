@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zuoye</title>
+    <title>使用new和构造函数</title>
 </head>
 <body>
+  <script>
+        function Human(options){
+        this.name=options.name
+        this.city=options.city 
+        this._proto_=Human.prototype
+    }
+    Human.prototype.species="人咧"
+    Human.prototype.walk=function(){
+        console.log("我叫"+this.name+"我居住在"+this.city+"物种名是"+this.species+"使用的工具是"+this.useTOOLS)
+    }
+    Human.prototype.useTOOLS="镰刀"
+
+    var human=new Human({name:'Frank',city:'Hangzhou'})
+    var human2=new Human({name:'Jack',city:'Hangzhou'})
+
+    human.walk()
+    human2.walk()
+
     
+  </script>
 </body>
 </html>
