@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>new是做啥</title>
+</head>
+<body>
+
+
+    var object = new Object()
+
+自有属性 空
+object.proto === Object.prototype
+
+var array = new Array('a','b','c')
+
+自有属性 0:'a' 1:'b' 2:'c',length:3
+array.proto === Array.prototype
+Array.prototype.proto === Object.prototype
+
+var fn = new Function('x', 'y', 'return x+y')
+自有属性 length:2, 不可见的函数体: 'return x+y'
+fn.proto === Function.prototype
+
+Array is a function
+Array = function(){...}
+Array.proto === Function.prototype
+    
+</body>
+</html>

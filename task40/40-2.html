@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>a=a || {}</title>
+</head>
+<body>
+或              且
+a || b      c  &&  d    值基本上不可能是true/false  ，值是falsy  trny值选一个
+
+
+5个falsy值
+0 NaN ‘’ null undefind
+
+
+例子
+
+
+1&&0
+>0
+
+1&&0&&2
+>0
+
+1&&0&&2&&3
+>0
+结论就是：&&进行且操作的时候，遇到第一个falsy值就返回第一个falsy值
+
+
+1&&0&&console.log(3)
+>0
+结论就是：第三个不会进行运算
+
+
+===========================
+
+0||undefined||null||1
+>1
+
+
+0||undefined||null||1||0||null
+>1
+
+
+var a=b||{}
+if(b){
+    a=b
+}else{
+    a={}
+}
+
+    var app={} //危险代码
+    if(app){
+
+    }else{
+        app={}
+    }
+
+    var app=app||{}//兜底
+    if(app){
+        app=app
+    }else{
+        app={}
+    }
+</body>
+</html>

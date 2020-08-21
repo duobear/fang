@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给对象一个类</title>
+</head>
+<body>
+    留言：ajax的功能
+    回顾一一下代码
+    <script src="./js/init_swiper.js"></script>初始化轮播
+    <script src="./js/auto-slide-up.js"></script>自动往上滚的动画
+    <script src="./js/sticky-topbar.js"></script>topbar顶部的动画
+    <script src="./js/smoothly-navigation.js"></script> 点击之后滑动
+    <script src="./message-mvc.js"></script> 做留言的
+
+
+    这个5个代码
+model=
+view=
+control=
+
+control.init(view,mmodel)
+
+跨文件的重复，level提高看到的，看到5个文件中的view的重复
+所以我想view对象 分类
+control，，model分类，分类不懂，就叫模板吧
+
+新建base文件夹，View.JS,封装了View
+
+5个文件就message.js有model，因此我们把sticky-topbar.js也改装一下，使得它有
+var model={
+    init:function () {
+        AV.init({
+            appId: "zc9VXE4qX92iVzjSCWD5TTKG-gzGzoHsz",
+            appKey: "jDzk7zz4iDbAQ63IyhOfSdxG",
+           
+          });
+        
+    },
+    fetch:function(){
+        var query=new AV.Query('X');
+        return query.find()
+
+    },
+    save:function (name) {
+        var Message=AV.Object.extend('X');
+        var message=new Message();
+        return message.save({
+            'name':name            
+        })
+        
+    },
+}
+
+
+提取Model.js 封装  
+
+然后index.html引入这个两个js View.js   Model.js
+
+
+
+
+针对message.js与Control.js中this的理解
+1；controller===object
+2：controler.init(view,model) 
+改成成controler.init.call(controler,view,model) 
+因此control.init(view,model)中的this，当然TM是controler 也就是1里面的object 
+
+controler.init里面的this就是object 
+object.init里面的this是object 
+3：initB.call(this,view,model)
+ initB里面的this===call后面的this
+ call后面的this===第二条里面的this
+ 第二条里面的this===object 
+ 》》initB里面的this就是object
+
+
+ 
+      
+</body>
+</html>.

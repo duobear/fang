@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复习一下this</title>
+</head>
+<body>
+    button.onclick = function f1(){
+        console.log(this) // 触发事件的元素。  button
+    }
+    
+    button.onclick.call({name: 'frank'})//this就是call的第一个参数，就是{name：‘frank’}
+    
+    
+    
+    button.addEventListener('click', function(){
+        console.log(this) // 该元素的引用 button
+    }
+  
+    
+    
+    $('ul').on('click', 'li' /*selector*/, function(){
+        console.log(this) //this 则代表了与 selector 相匹配的元素。li
+    
+    })
+    3 结果
+    去看 on 的源码呀 -> 做不到
+    jQuery 的开发者知道 onclick 的源码，f1.call(???)
+    jQuery 的开发者写了文档
+    看文档呀
+
+    function X(){
+        return object = {
+            name: 'object',
+            f1(x){
+                x.f2()
+            },
+            f2(){
+                console.log(this)//A:没有执行
+            }
+        }
+    }
+    
+    var options = {
+        name: 'object',        
+        f1(){},
+        f2(){
+            console.log(this) // B: 是options，因为37行的x，36行的小括号，54行的小括号
+        }
+    }
+    
+    var x = X()
+    x.f1(options)
+
+=================================================================
+
+
+    function X(){
+        return object = {
+            name: 'object',           
+            f1(x){
+                x.f2.call(this)
+            },
+            f2(){
+                console.log(this)  //C
+            }
+        }
+    }
+    
+    var options = {
+        name: 'options',
+        f1(){},
+        f2(){
+            console.log(this) // D:是object，第80行的this，是x，x就是object，63行的this，就是object
+        }
+    }
+    
+    var x = X()
+    x.f1(options)
+
+ 
+    =================================================================
+
+
+    function X(){
+        return object = {
+            name: 'object',
+            options: null,
+            f1(x){
+                this.options = x
+                this.f2()
+            },
+            f2(){
+                this.options.f2.call(this)
+            }
+        }
+    }
+    
+    var options = {
+        name: 'options',
+        f1(){},
+        f2(){
+            console.log(this) //F: 是object  ，91和92的this都是109的x，就是object，，95是从92过来的，95的this也是object
+        }
+    }
+    
+    var x = X()
+    x.f1(options)
+
+    
+</body> 
+</html>
