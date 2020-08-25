@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字符串的截取</title>
+</head>
+<body>
+    <!-- 获取子字符串：3种
+    str.slice(starti,endi+1)  
+    str.substring(starti,endi+1) 用法同slice，只不过不支持负数参数  
+    str.substr(starti,n) 从starti开始，获取n个字符 -->
+    <script>
+        var s='abcdefg'
+        resulta=s.substring(0,1)
+        console.log(resulta)
+
+        resultb=s.substring(1,2)
+        console.log(resultb)
+        
+        resultg=s.substring(6,7)
+        console.log(resultg)
+
+
+       
+        console.log(s.substring(-1,0))
+        console.log(s.substring(0,1))
+        console.log(s.substring(1,2))
+        console.log(s.substring(2,3))
+
+
+        
+    </script>
+    
+</body>
+</html>

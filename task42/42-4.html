@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初识异步与回调</title>
+</head>
+<body>
+    
+ 因为index.html里面的是js，有重复的，因此我们要美化一下
+
+
+
+
+ 异步：不等结果直接进行下一步
+ 回调可以拿到异步的结果
+
+ 
+ A：让黄牛去买票，然后站着等（同步）
+ B：让黄牛去买票（告诉黄牛，你买到票就Call我),然后去做别的（异步），小括号里面是回调
+
+
+ 回调是拿到异步结果的一种方式，当然也可以拿同步的结果
+
+
+ 告诉黄牛，你买到票就Call我
+ when you get the ticket,call me back.
+
+
+ 代码不会自动往下滚
+
+<script>
+
+
+function 异步做事(){
+    setTimeout(function(){
+        console.log('异步做事')
+    },1000)
+}
+function 同步做事(){   
+        console.log('异步做事')  
+}
+
+异步做事()
+console.log(1)//不等上面的结果
+// 鱿鱼异步做事，不等记过，所以会先执行1
+
+同步做事()
+console.log(1)//要等上面的结果
+// 由于同步做事要等结果，所以要等做完事，在执行1
+
+
+</script>
+
+
+    marked.js  
+    
+
+</body>
+</html>

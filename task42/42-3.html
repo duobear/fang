@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>枯燥的写代码中</title>
+</head>
+<body>
+
+    body中的pre标签与style标签内容一样，
+    pre标签里面可以中英文，但是style只放css，因此不能有中文，所以style内容中文用注释
+
+
+    pre标签里面可以写标签，他会解析的
+    要求就是html标签变成红色，，html{}
+<span>html</span>{},但是style里只能放css，因此就特意用replace更换
+
+这样的技术肯定是有人已经做好的，我们要自己判断选择器是哪个，所以我们之间找对应库，库的名字叫 highligh.js   prismjs.com,
+给关键词添加span  。copy run modify
+
+    cdnjs里面搜 prism，看有没有css，没有，所以，我们去官网prismjs下载，css和js，
+    在本地新建vednor文件夹，和prism文件夹，吧css和js放进入
+
+    index.html ,引入这个css和js
+
+使用1
+    const code = `var data = 1;`;
+const html = Prism.highlight(code, Prism.languages.javascript, 'javascript');
+使用2
+const code = `body{color：red}`;
+const html = Prism.highlight(code, Prism.languages.css, 'css');
+
+token selector会把我的css改成span标签包裹的，附加token selector的选择器，
+做特效，显示黑色，然后再用库里的绿色，因此创建一个default.css
+
+<link rel="stylesheet" href="vendor/prism/prism.css">
+<link rel="stylesheet" href="css/defalutl.css">
+优先级的问题，因此黑色的这个放最后面
+然后特效把黑色变成高亮
+
+
+做3D效果
+
+    
+</body>
+</html>

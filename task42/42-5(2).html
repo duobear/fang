@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>什么是回调（callback）</title>
+</head>
+<body>
+    
+什么是回调（callback）？ 
+有两个函数A和B  
+把函数B当做函数A的参数，那么函数B就是（回调函数）
+然后执行调用A，A里面内容里面有一条fn.call(),那这个fn.call（）就是回调
+举例说明：
+<script>
+    function A(fn){
+        console.log(1)
+        setTimeout(()=>{
+            console.log(2)
+        },0)
+        fn.call()
+        
+    }
+    
+    
+    A(function B(){
+        console.log(3)
+    })
+    </script>
+</body>
+</html>

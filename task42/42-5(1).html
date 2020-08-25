@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>什么是异步</title>
+</head>
+<body>
+    什么是异步？
+    异步就是不等结果直接进行下一步，并且异步代码的编写顺序和执行顺序不一样
+    举例说明：
+    console.log(1)
+    setTimeout(function(){
+    console.log(2)
+    },0)
+    console.log(3)
+
+    编写顺序是1,2,3
+    执行顺序是1,3,2
+
+
+
+</body>
+</html>
