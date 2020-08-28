@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录注册</title>
+</head>
+<body>
+    1：server.js中，写上sign_up的路由
+    具体内容是
+    else if(path==='/sign_up'){
+        let string=fs.readFileSync('./sign_up.html','utf-8')
+        response.statusCode=200
+        response.setHeader('Content-Type', 'text/html;charset=utf-8')
+        response.write(string)
+        response.end()
+        
+      }
+    2：在task44文件夹下面，创建一个sign_up.html
+    3：运行server.js 
+       在git-bash中运行  node server 8080       
+            PS C:\Users\image\AppData\Local\Programs\fang\task44> node server 8080
+            监听 8080 成功
+            请用在空中转体720度然后用电饭煲打开 http://localhost:8080
+    4：server开启后，在浏览器中打开一个地址
+    http://localhost:8080/sign_up
+    浏览器显示sin_up.html的内容
+    响应 response，内容就是html的代码，
+    是response.write()设置的
+    5：在sign_up.html,中写上input框，调整样式
+    6：在sign_up.html,引入jquery，因为要写input的监听点击事件submit
+    在js中主要是为了，得到我指定属性的val值，并放到hash中
+    主要用到了api是preventDeafult，forEach ，find value，each text，siblings
+    var need=['email','password','password_confirmation']
+        need.forEach((name)=>{
+        let value= $form.find(`[name=${name}]`).val()
+        hash[name]=value
+    7：得到了hash，我们就可以ajax
+    $.post('/sign_up',hash)
+    .then(()=>{   //chengg 
+
+    },()=>{    //shibai
+    
+    })
+    8：后端server要接受form get data的值，借用网上的
+    else if(path==='/sign_up'&&method==='POST'){
+        let body=[]//请求体
+        request.on('data',(chunk)=>{//监听request的data事件
+        body.push(chunk)  //每一次给我一小块数据，我放到body中
+        }).on('end',()=>{   //当request，end的时候，
+        body=Buffer.concat(body).toString();//body就可以吧里面的数据都弄出来
+        console(body)
+        response.statusCode=200
+        response.end()
+        }); 
+    }
+    9:把网上的封装一下
+    function readBody(request){
+        return new Promise((resolve,reject)=>{
+          let body=[]   //请求体
+          request.on('data',(chunk)=>{
+            body.push(chunk)
+          }).on('end',()=>{
+            body=Buffer.concat(body).toString();     
+            resolve(body)
+          });   
+        })
+      }
+
+    10：第8个地方就变成
+    else if(path==='/sign_up'&&method==='POST'){
+        readBody(request).then((body)=>{
+            console.log(body)//在server的gitbash，显示email=1&password=2&password_confirmation=2
+            response.statusCode=200
+            response.end()
+        })
+    }
+    11.需要把email=1&password=2&password_confirmation=2这个
+        变成hash
+        string变成hash
+        else if(path==='/sign_up'&&method==='POST'){//得到post上来的form post data
+            readBody(request).then((body)=>{
+              console.log(body)
+              let strings= body.split('&')//['email=1,'password=2','password_confirmation=3']
+              let hash={}
+              strings.forEach(string => {
+                let parts=string.split('=')//['email,1]
+                let key=parts[0]
+                let value=parts[1]
+                hash[key]=value
+              }); 
+            console.log(hash)
+            response.statusCode=200
+            response.end()
+            }) 
+           
+        }
+    12:在server的gitbsh中输出hash格式{ email: '1', password: '2', password_confirmation: '2' }
+    13：拿到hash之后，就可以获取hash里面的属性和属性对应的值
+    // // let email=hash['email']
+    //     let {email,password,password_confirmation}=hash
+    email，就代表变量的值
+    14：接下来就是判断三个值的一些特效，用if else来进行
+    console.log(hash)
+    response.statusCode=200
+    response.end()
+    变成了
+    变成了
+    console.log(hash)
+    let {email,password,password_confirmation}=hash
+   
+    if(email.indexOf('@')===-1){
+      response.statusCode=400
+      response.setHeader('Content-Type','application/json; charset=utf-8')
+      response.write('email is bad')
+    }else if(password!==password_confirmation){
+      response.statusCode=400
+      response.write('password not match')
+    }else{
+      response.statusCode=200
+    }  
+    response.end()
+ 
+15:返回的结果给前端去处理，把email is bad的后端语言，翻译成前端的邮箱写写错了
+
+$.post('/sign_up',hash)
+    .then((response)=>{   //chengg 
+    console.log(response)
+        },(request)=>{    //shibai，1，请求对象，2：“error”，3：“bad reques”-http状态信息
+        if(request.responseText==='email is bad'){
+            alert('邮箱写错了')
+        }
+    })
+16：解决前后端的需求小功能改动，如问题提示，分离问题
+定协议，http协议，前后端撕逼协议
+告诉前端那个错了，错的描述，因此后端需要把数据改成json格式，而不是字符串
+因此后端的email is bad，改成{“errors：{”email“：”invalid“}}
+
+17：前端就是把地道的reuqest.responseText,用JSON。pare（）转换一下
+18：那为什么不直接拿到json格式的呢
+19：因此后端加上一个返回的格式
+response.setHeader('Content-Type','application/json; charset=utf-8')
+20：前端就可以用
+request.responseJSON
+[小tip，后端数据，只有一个的时候，不要加逗号]
+      
+21:前端利用是不是invalid，给前端的页面一个提示，并且给对应的页面一个提示
+
+    
+</body>
+</html>

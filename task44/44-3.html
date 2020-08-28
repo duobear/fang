@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie</title>
+</head>
+<body>
+登录功能的话，就需要存在数据库，
+先进行一个错误示范
+搞一个文件夹和文件，db文件夹，users.json文件
+
+1：在user文件里初始化一个，加[]
+2：在server。js添加内容
+else{
+    var users=fs.readFileSync('./db/users','utf8')
+    users=JSON.parse(users)
+    response.statusCode=200
+  }   
+3:并且把数据放到文件中
+else{
+    var users=fs.readFileSync('./db/users','utf8')
+    users=JSON.parse(users)
+    users.push({email:email,password:password})
+    fs.writeFileSync('./db/users',users)
+    response.statusCode=200
+  }
+4:看效果,解决bug
+    运行server3.js，在页面天上邮箱和密码，发现有个bug
+    indexOf（“@”）
+    到后台后没有@了，原来是因为转成%40代替了@
+    因此后台需要 转码一下
+    hash[key]=value
+    hash[key]=decodeURIComponent(value)
+5:继续看操作上面一个步骤
+    又出现一个bug，db的user看不到数据，文件只能存字符串，现在是对象
+    因此需要进行修改
+    var usersString=JSON.stringify(users)
+    fs.writeFileSync('./db/users',usersString)
+6:还是有bug，用console的方便来试错
+最后发现还是数据问题
+把users=JSON.parse(users)
+用try，catch
+try {
+    users=JSON.parse(users)
+  } catch (error) {
+    users=[]
+  }
+7:再次运行，数据到都放的db的users的文件中
+8：但是可以存放了重复的数据，因此需要优化
+遍历users文件中的数据看，得到的和里面的数据是否一样
+一样的话，就break
+<!-- let inUse=false
+for(let i=0;i<users.length;i++){
+  let user=users[i]
+  if(user.email===email){
+    inUse=true
+    break;
+  }
+}
+if(inUse){
+  response.statusCode=400
+  response.write('email in use')
+}else{
+  users.push({email:email,password:password})
+  var usersString=JSON.stringify(users)
+  fs.writeFileSync('./db/users',usersString)
+  response.statusCode=200
+} -->
+9：运行，输入相同的邮箱，才是或400，然后提示 email in user
+10：一般来说不会直接存放数据，因此，需要加密
+敏感信息需要加密
+先把文件夹db的users清空，因为有重复数据
+然后注册
+11：现在注册后，需要登录，创建一个登录页面
+    sign_in.html ,并且在server.js中添加一个路由
+
+    else if(path==='/sign_in'){
+        let string=fs.readFileSync('./sign_in.html','utf-8')
+        response.statusCode=200
+        response.setHeader('Content-Type', 'text/html;charset=utf-8')
+        response.write(string)
+        response.end()     
+  }
+12:路由添加后，要区分post和get
+因此要分成
+}else if(path==='/sign_in'&&method==='GET'){}
+}else if(path==='/sign_in'&&method==='POST'){}
+注意路由是没有点的
+
+13：然后可以仿照sign——up
+ 可以看到登录按钮点击后，server。js的gitbash框可以输出值
+然后看一下数据库和输入的登录值是否有一样的
+
+14:运行server3.js 
+登录，输入正确的，200
+登录，输入错误的，401
+
+15：登录成功后，跳转首页，
+    在sign-in。html的成功出加上
+
+    window.location.href='/' 
+16:有个疑问
+登录成功后跳转首页，但是我不登录也看到首页
+因此要进行限制，不登录就不能看到首页
+第二点就是，登录成功后，把账号显示上去
+17：解决这个要用到cookie的功能
+在server3.js记录一下
+response.setHeader(`Set-Cookie:sign_in_email=${email}`)
+运行server3.js 
+在登录页面进行正确的登录
+sign_in.html的响应头
+request headers viewsource
+有一个段话
+HTTP/1.1 200 OK
+Set-Cookie: sign_in_email=1158740196@qq.com
+Date: Fri, 28 Aug 2020 02:34:08 GMT
+Connection: keep-alive
+Content-Length: 0
+
+看locallset的请求头
+request headers viewsource
+有一个段话（重点看cookie
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Connection: keep-alive
+Cookie: sign_in_email=1158740196@qq.com
+Host: localhost:8888
+Referer: http://localhost:8888/sign_in
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+
+
+我之前给你setcookie，后面相同的源的页面的cooke都会带上
+
+18:httponly,填后，前端的js拿不到cooke更设置不了 document.cookie
+    response.setHeader('Set-Cookie',`sign_in_email=${email};HttpOnly`)
+    但是可以手动改，只能影响js上的获取和更改
+
+    document.cookie='xxxx'
+
+19：首页进行读数据
+    request.headers.cookie
+    多个，用分号；分割
+
+    用传过来的数据和数据库文件里的数据进行比较
+    把相同的数据放到变量foundUser中
+20:把找到的用户，放入到index页面中
+let string=fs.readFileSync('./index.html','utf-8')//页面文本
+if(foundUser){
+    string=string.replace('__password__',foundUser.password)
+  }else{
+   string= string.replace('__password__','不知道')
+  }
+
+
+
+
+
+    Cookie 特点
+    1.服务器通过 set-cookie 响应头设置Cookie
+    2.服务器得到 cookie之后，每次请求都要带上cookie
+    3.服务器读取 cookie 就知道登录用户的信息（email）
+
+
+    问题
+    1.我在chrome登录，得到了cookie，用Safari访问，safari会带上cookie吗？
+    》no，不会带上
+
+    2.cookie存在哪
+    》windows系统存在C盘的一个文件里
+
+    3.票可以作假吗？
+    》可以
+
+    4.cookie有，有效期吗？
+    》默认有效期20分钟左右
+
+    后端可以强制设置有效时间
+    
+    
+    ```````````````````````````` `````````````````````````````````````````````````````````````````````````````````````
+
+
+    application cookies
+
+
+    server        frank两个之间的联系
+
+
+    frank，打开sign-up注册，post（数据，email，p1，p2），然后server就会写数据，返回注册成功
+    frank，打开sign-in登录，post（数据，email，p1）然后server进行匹配，成功找到后，就设置setcooke
+    fanhk，sign-in成功后，可以打卡首页，带上cook，，server读取cookie与数据库匹配，找到后，显示到页面上
+
+
+
+
+    
+</body>
+</html>
