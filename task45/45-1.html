@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用Session保存信息</title>
+</head>
+<body>
+    回忆上一节内容
+    如何使用cookie做登录和注册
+    重要例子
+    公园买票
+    cookie的特点
+    1：服务器通过Set-cookie响应头设置Cookie
+        response.setHeader('Set-Cookie',`sign_in_email=${email}`)
+    2：浏览器得到Cookie之后，每次请求都会带上Cookie
+        sign_in_email=1158740196@qq.com
+        http://localhost:8888/INDEX，中看请求头
+        Cookie: a=1; b=2; sign_in_email=1158740196@qq.com
+    3：服务器读取Cookie就知道登录用户的信息（email）
+        假设服务器的数据库在原有的基础增加一条
+        [{"email":"1158740196@qq.com","password":"1"}]
+
+        [{"email":"1158740196@qq.com","password":"1"}
+        ,{"email":"bb@qq.com","password":"22"}
+        ]
+        
+        操作1：就是在application-cookie中，1158改成bb，去浏览index页面就会发现22的出现
+        会有问题
+     
+    出现的问题就是
+    假设认为的在浏览器，更改cookie，把11变成bb
+    ==========================================================
+
+    cookie问题结论就是，不安全，用户可以手动改cookie，里的的账号，导致密码出现，我知道别人的账号，就可以显示别人的密码
+    很不安全
+
+    解决这个就是，让别人看不懂密码不就可以了
+
+
+1：申明一个变量sessions，hash
+    let sessions={
+    
+    }
+2：登录成功后设置随机数sessionsid,并且把cooke的值设置成id，id指向了邮箱
+    //response.setHeader('Set-Cookie',`sign_in_email=${email}`)
+
+    let sId=Math.random()*100000
+    sessions[sId]={sign_in_email:email}
+    response.setHeader('Set-Cookie',`sessionId=${sId}`)
+
+3：运行运行
+    响应头的变化response headers
+    之前：Set-Cookie: sign_in_email=1158740196@qq.com
+    现在：Set-Cookie: sessionId=68464.66751736763
+    ps（接下来就是所有的同源请求都是会带上cookie，多个cooke直接用分号分割）
+    
+
+4:然后去请求首页的时候，通过id去获取email
+之前的获取email  // let email=hash.sign_in_email
+现在的获取email   let email=sessions[hash.sessionId].sign_in_email
+
+有个bug,因为关掉服务器后，这个id就会不见，因此进行一个优化
+
+5：优化一下
+//let email=sessions[hash.sessionId].sign_in_email
+ 
+let mySession=sessions[hash.sessionId]
+let email
+if(mySession){
+  email=mySession.sign_in_email
+}
+
+6：浏览器中数据的显示
+sign-in，
+响应头：Set-Cookie: sessionId=1835.073024385947
+
+mian。js，index
+请求头：Cookie: sessionId=1835.073024385947; a=1; b=2
+
+
+
+在原来成功后，设置cooke 
+
+
+session是什么
+1：将sessionID（随机数）通过cookie发给客户端
+2：开户段访问服务器，服务器读取SessionID
+3:服务器有一块内存（对象）保存了所有session
+4：通过sessionid我们可以通过对应用户的隐私信息，如id，email
+5：这块内容（对象I哈希表）就是服务器上的所有session
+
+原则
+
+</body>
+</html>
