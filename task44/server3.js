@@ -35,16 +35,14 @@ var server = http.createServer(function(request, response){
      let value=parts[1]
      hash[key]=value
    }
-   console.log(hash)
-   console.log(hash.a)
-   console.log(hash.b)
-   console.log(hash.sign_in_email)
-  
+
+
    let email=hash.sign_in_email
    let users=fs.readFileSync('./db/users','utf8')
    users=JSON.parse(users)
+   
 
-  
+ 
     let foundUser
       for(let i=0;i<users.length;i++){
        
@@ -53,22 +51,13 @@ var server = http.createServer(function(request, response){
           break;
         }
       }
-      
+      console.log(foundUser)
       if(foundUser){
       
         string=string.replace('__password__',foundUser.password)
       }else{
        string= string.replace('__password__','不知道a')
       }
-
-
-
-    // try {
-    //   users=JSON.parse(users)
-    // } catch (error) {
-    //   users=[]
-    // }
-   
 
 
     response.statusCode=200
