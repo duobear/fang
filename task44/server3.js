@@ -25,18 +25,25 @@ var server = http.createServer(function(request, response){
  
   if(path === '/'){    
     let string=fs.readFileSync('./index.html','utf-8')//页面文本
-
     let cookies=request.headers.cookie.split(';')
+    console.log(request.headers.cookie)
+    console.log(cookies)
     let hash={}
    for(let i=0;i<cookies.length;i++){
      let parts=cookies[i].split('=')
-     let key=parts[0]
+     let key=parts[0].replace(/\s/ig,'');
      let value=parts[1]
      hash[key]=value
    }
+   console.log(hash)
+   console.log(hash.a)
+   console.log(hash.b)
+   console.log(hash.sign_in_email)
+  
    let email=hash.sign_in_email
-   var users=fs.readFileSync('./db/users','utf8')
+   let users=fs.readFileSync('./db/users','utf8')
    users=JSON.parse(users)
+
   
     let foundUser
       for(let i=0;i<users.length;i++){
@@ -46,19 +53,21 @@ var server = http.createServer(function(request, response){
           break;
         }
       }
+      
       if(foundUser){
+      
         string=string.replace('__password__',foundUser.password)
       }else{
-       string= string.replace('__password__','不知道')
+       string= string.replace('__password__','不知道a')
       }
 
 
 
-    try {
-      users=JSON.parse(users)
-    } catch (error) {
-      users=[]
-    }
+    // try {
+    //   users=JSON.parse(users)
+    // } catch (error) {
+    //   users=[]
+    // }
    
 
 
@@ -169,7 +178,7 @@ var server = http.createServer(function(request, response){
       }
 
       if(found){
-        //set-cookie
+        //set-cookie       
         response.setHeader('Set-Cookie',`sign_in_email=${email}`)
         // response.setHeader('Set-Cookie',`sign_in_email=${email};HttpOnly`)
         response.statusCode=200
