@@ -6,6 +6,26 @@
     <title>Expires</title>
 </head>
 <body>
-    
+    expires也是控制缓存的
+    以前用的都是expires，现在用的都是cache-control 
+    这个是一个升级过程
+1：设置一个过期的时间，为当前时间
+    response.setHeader('Expires','Tue, 01 Sep 2020 07:33:36 GMT')
+
+2:数据怎么获取的，在浏览器的console中打
+
+    d=new Date()
+    >Sun Feb 04 2018 22:38:02 GMT+0800(CST)
+    d.toISOStirng()
+    >>>"2018-02-04T14:38:05.317Z"
+    d.toGMTString()
+    >>>"Sun,04 Feb 2018 14:38:05 GMT"
+3：expires就是
+    多长时间过期，什么时候（具体几分几秒过期）
+    几分几秒是本地时间，要是本地时间错乱，容易出问题
+4：expieres与cache-control
+    expier不靠谱，因此升级一下功能，就有cache-control
+5：两个之前的比较
+    一个是设置时间长度，一个是设置时间点，两个同时存在，优先使用cache
 </body>
 </html>

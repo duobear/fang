@@ -6,6 +6,58 @@
     <title>ETag</title>
 </head>
 <body>
+
+   ETag： 给文件一个版本号
     
+   md5是一个摘要算法
+   Linux.iso 400MB  XXXXXXX
+
+   一个内容对应一个MD5,
+   例子，1.txt（11111）===> MD5(1.txt)
+   复制一份 1copy.txt(11011)===>MDE(1copy.txt)
+
+   差异越小，那么算出的结果差异越大，微小的差异，放大
+
+
+   安装MD5 
+   使用MD5
+   let fileMD5=md5（string）
+   response。setHeader（‘Etag’，fileMD5)
+
+   运行后repoanse header多一个头
+    etag：xxxx
+   再次请求后，main.JS的请求中多累一个字段
+   if-none-match：xxxx
+
+
+
+   if（request。header【‘if-none-mache’】===fileMD5){
+        response.statusCODE=304//没有响应体
+   }else{
+    response。setHeader（‘Etag’，fileMD5)
+    //有响应体
+    response。write（stirng）
+   }
+   response。end（）
+
+  
+
+   304(没有改过，文件没有改过，跟你一样)   
+
+   ETag直接不下载，但是还是要请求的（响应体空的）
+   Cache-control就是直接不请求,
+   cache-control更好
+
+
+
+   last-Modified自己研究
+
+
+1：server.js文件的mian.js路径，增加一条
+response.setHeader('Etag'，fileMD5)
+2:浏览器的mian.js的请求头会有
+    if-none-match：xxxx
+3：
+
 </body>
-</html>
+</html>  

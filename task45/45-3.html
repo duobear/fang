@@ -6,6 +6,49 @@
     <title>localStorage用法</title>
 </head>
 <body>
-    
+    在console。log中，页面有一个赋值a=1，然后a=2，刷新页面后，a会是1
+    问题，就是怎么才能变成2
+答案：用localStorage.setItem('a',a)
+持久化存储，刷新页面不会消息，会记住操作的值，没有记忆
+
+例子1：记录是不是显示过改变
+
+
+loacalStorage
+1：LocalStorage跟Http无关
+2：Http不会带上localstorage的值
+3：只有相同域名的页面才能互相读取Locatstorage（没有同源那么严格）
+4：灭个域名localstorage最大存储量为5mb左右（每个浏览器不一样）
+5：常用场景：记录有没有提示过用户（没有用的信息，不能记录面膜）
+6： LocalStorage永久有效，除非用户手动清除
+
+SessionStorage（绘画存储）
+1，2，3，4同上
+5：页面关闭后就会失效
+举例sessionStorage.setItem('','')
+    SessionStorage.getItem('')
+
+
+两个之间就是时间保留不同
+
+面试题
+cookie和session什么关系？
+一般来说seesion是基于cookie实现的，因为s必须将sid放到cookie里面，然后发送给客户端，
+没有sid没有s ，s是依赖于cookie的
+反过来说，cookie是seesion的基石
+
+cookie和localstorage？
+cook而每次请求都会带给服务器，而localstorage不会被带到服务器上去
+cookie的存储是4k，localstorage，最大是5m
+
+localstoage和sessionstorage的区别
+sessionstorage在用户关闭页面后，设置信息就会失效
+
+cookie的有效期
+就是页面关闭页面后就会失效，好处是，后台代码可以任意设置COOKIE的过期时间
+
+
+
+
 </body>
 </html>

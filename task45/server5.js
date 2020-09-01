@@ -27,26 +27,29 @@ var server = http.createServer(function(request, response){
  
   console.log('方方说：含查询字符串的路径\n' + pathWithQuery)
  
-  if(path === '/'){    
+  if(path === '/js/main.js'){ 
+    let string=fs.readFileSync('./js/main.js','utf-8')//页面文本
+    response.setHeader('Content-Type','application/javascript; charset=utf-8')
+    response.setHeader('Cache-control','max-age=10')
+    response.write(string)
+    response.end()       
+
+  }else if(path==='/css/default.css'){
+    let string=fs.readFileSync('./css/default.css','utf-8')//页面文本
+    response.setHeader('Content-Type','text/css; charset=utf-8')  
+    response.write(string)
+    response.end() 
+  
+  
+  }else if(path === '/'){    
     let string=fs.readFileSync('./index.html','utf-8')//页面文本
-    let cookies=''
-    if(request.headers.cookie){
-      cookies=request.headers.cookie.split(';')
-    }    
-    let hash={}
-    for(let i=0;i<cookies.length;i++){
-      let parts=cookies[i].split('=')
-      let key=parts[0].replace(/\s/ig,'');
-      let value=parts[1]
-      hash[key]=value
-    }
-   let email=hash.sign_in_email
-  //  //let email=sessions[hash.sessionId].sign_in_email 
-  //  let mySession=sessions[hash.sessionId]
-  //  let email
-  //  if(mySession){
-  //    email=mySession.sign_in_email
-  //  }
+  
+  
+   let mySession=sessions[query.sessionId]
+   let email
+   if(mySession){
+     email=mySession.sign_in_email
+   }
    let users=fs.readFileSync('./db/users','utf8')
    users=JSON.parse(users) 
     let foundUser
@@ -173,12 +176,13 @@ var server = http.createServer(function(request, response){
 
       if(found){
 
-        // let sId=Math.random()*100000
-        // sessions[sId]={sign_in_email:email}
-        // response.setHeader('Set-Cookie',`sessionId=${sId}`)
-        //set-cookie       
-       response.setHeader('Set-Cookie',`sign_in_email=${email}`)
-        // response.setHeader('Set-Cookie',`sign_in_email=${email};HttpOnly`)//前端取不出
+        let sId=Math.random()*100000
+        sessions[sId]={sign_in_email:email}
+        //set-cookie 
+        //response.setHeader('Set-Cookie',`sessionId=${sId}`)
+        response.write(`{"sessionId":${sId}}`)
+              
+   
         response.statusCode=200
       }else{
         response.statusCode=401

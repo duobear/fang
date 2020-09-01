@@ -11,31 +11,44 @@
     重要例子
     公园买票
     cookie的特点
-    1：服务器通过Set-cookie响应头设置Cookie
-        response.setHeader('Set-Cookie',`sign_in_email=${email}`)
-    2：浏览器得到Cookie之后，每次请求都会带上Cookie
-        sign_in_email=1158740196@qq.com
-        http://localhost:8888/INDEX，中看请求头
-        Cookie: a=1; b=2; sign_in_email=1158740196@qq.com
-    3：服务器读取Cookie就知道登录用户的信息（email）
-        假设服务器的数据库在原有的基础增加一条
-        [{"email":"1158740196@qq.com","password":"1"}]
+    1：服务器通过Set-cookie头，给客户端一串字符串Cookie
+       服务器（sign_in路径下，登录成功后设置头：
+         response.setHeader('Set-Cookie',`sign_in_email=${email}`)
+       客户端（登录成功页面的sign_in的Response Headers响应头会有一条：
+         Set-Cookie: sign_in_email=1158740196@qq.com
+        隐藏的地方，Application-Cookie的表格会有一条数据sign_in_email：1158740196@qq.com
 
-        [{"email":"1158740196@qq.com","password":"1"}
-        ,{"email":"bb@qq.com","password":"22"}
-        ]
+
+    2：浏览器得到Cookie之后，客户端每次访问（请求）相同域名的网页时，都会带上Cookie
+        一串字符串就是=>cookie：sign_in_email=1158740196@qq.com
+        请求http://localhost:8888/INDEX，中看请求头
+        Cookie: a=1; b=2; sign_in_email=1158740196@qq.com
+        Cookie: sign_in_email=1158740196@qq.com
+
+    3：模拟手动更改本地的cookie的账号后，页面的情况
+        提前准备：把数据库users在原有基础上增加一条        
+            users文件原来内容： [{"email":"1158740196@qq.com","password":"1"}]
+
+            users文件增加后：[{"email":"1158740196@qq.com","password":"1"}
+                            ,{"email":"bb@qq.com","password":"22"}
+                            ]
+        之前的流程介绍：服务器会读取cookie的头，然后与数据库数据匹配，若是匹配成功
+        就把账号对应的密码显示在页面中
+
         
-        操作1：就是在application-cookie中，1158改成bb，去浏览index页面就会发现22的出现
-        会有问题
-     
-    出现的问题就是
-    假设认为的在浏览器，更改cookie，把11变成bb
+        操作1：就是在Application-Cookie,
+                把表格中的1158740196@qq.com改成bb@qq.com，
+        操作2：去浏览index页面
+                就会发现bb账号对应的密码22显示在页面中
+        
+    cookie的出现的问题就是
+    按照上面的例子，在浏览器，手动更改cookie，把1158740196变成bb
     ==========================================================
 
     cookie问题结论就是，不安全，用户可以手动改cookie，里的的账号，导致密码出现，我知道别人的账号，就可以显示别人的密码
     很不安全
 
-    解决这个就是，让别人看不懂密码不就可以了
+    解决这个就是不安全，让别人看不懂和不能更改不就可以了，就是session
 
 
 1：申明一个变量sessions，hash
@@ -50,7 +63,7 @@
     response.setHeader('Set-Cookie',`sessionId=${sId}`)
 
 3：运行运行
-    响应头的变化response headers
+    sign——in的响应头的变化response headers
     之前：Set-Cookie: sign_in_email=1158740196@qq.com
     现在：Set-Cookie: sessionId=68464.66751736763
     ps（接下来就是所有的同源请求都是会带上cookie，多个cooke直接用分号分割）
@@ -75,13 +88,18 @@ if(mySession){
 sign-in，
 响应头：Set-Cookie: sessionId=1835.073024385947
 
-mian。js，index
+mian。js，index，locallhost
 请求头：Cookie: sessionId=1835.073024385947; a=1; b=2
 
 
 
 在原来成功后，设置cooke 
 
+cookie
+1：服务器通过Set-cookie头，给客户端一串字符串
+2：客户端每次访问相同域名的网页是，必须带上这段字符串
+3：客户端要在一段时间内保存这个COOKIE
+4:COOKIE默认在用户关闭页面后失效
 
 session是什么
 1：将sessionID（随机数）通过cookie发给客户端

@@ -6,6 +6,48 @@
     <title>localStorage简介</title>
 </head>
 <body>
+
+    localStorage是html5技术提供的一个api
+    html5又有web技术，统称为html5，包括新的标签等
+
+    window.localStorage 
+
+    在浏览器的console.log一下
+
+    localstorage实质是一个hash
+
+    session是服务器上的hash，那我localStorage是浏览器的hash
+    session是服务器上的hash表，那我localStorage是浏览器的hash表
     
+ 
+1：是怎样的hash表，可以查看当前页面，有哪些值
+2：一般页面为空，给表设置值
+ localstorage.setItem('a','1')
+ localstorage.setItem('b','2')
+3:存函数
+localstorage.setItem('fn',function(){console.log(1)})
+>>>运行成功了，但是实质上是一个字符串，
+4：存对象
+localstorage.setItem('object',{name:'obj'})
+>>>运行成功了，显示为object  [Object Object]
+5:任意一个对象的 toString( )
+6：取值
+localstorage.getItem("a")
+localstorage.getItem("b")
+7:清空
+localstorage.clear()
+
+
+
+存
+    localstorage.setItem('a','1'),,就可以看到application的laocalstorage看到这个值
+    
+    localStorage.setItem()
+
+    值都是字符串
+取  localstorage.getItem("a")
+清空 localstorage.clear()
+
+
 </body>
 </html>

@@ -6,6 +6,49 @@
     <title>缓存控制Cache-Control</title>
 </head>
 <body>
+    http缓存
+    cache-control 
+    web性能优化
+    加速http请求和响应，从而加速网页访问
+    1：在index.html页面中引入default.css和main.js 
+    2:其中两个文件的内容分别从bootstranp.css和vue.js里面拷贝来的
+        手动或者命令，curl -L boot网址 >> css/default.css
+    3：百度bootcdn去找文件，然后拷贝CSS:63KB JS:141KB
+    4：在server5.js，增加上对应访问文件的路径，简称路由
+
+    5：mian.js 的路由
+    <!-- if(path === '/js/main.js'){ 
+        let string=fs.readFileSync('./js/main.js','utf-8')//页面文本
+        response.setHeader('Content-Type','application/javascript; charset=utf-8')
+        response.setHeader('Cache-control','max-age=30')
+        response.write(string)
+        response.end()       
     
+      } -->
+
+      defalut.css的路由
+      <!-- else if(path==='/css/default.css'){
+        let string=fs.readFileSync('./css/default.css','utf-8')//页面文本
+        response.setHeader('Content-Type','text/css; charset=utf-8')  
+        response.write(string)
+        response.end()      
+      
+      } -->
+
+    6:如何让我们css和js请求加快？？
+    7:在服务器添加的js路由上
+     添加  response.setHeader('cache-control'，max-age=30)
+       30秒内的请求，就读取上一次的文件，请求没有发出去，30s的保鲜，
+       因此只要在30秒内请求就是一直都没有给时间，30秒之后就会有时间
+    8：运行server，看浏览器，只看到main。js的文件
+        初次看mian.js需要14ms，后面刷新的页面都是0ms，memory,一直到30秒后，才是12ms
+    
+    9：结论就是，你想加速哪个文件，就给那个文件设置，这样在这个
+        时间内的下载时间就是0
+
+       disable cache就是不从内存拿取
+ 
+
+
 </body>
 </html>

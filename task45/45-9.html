@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP高级</title>
+</head>
+<body>
+    1：Cookie和Session的区别？
+    >>>
+        一般来说seesion是基于cookie实现的，因为session必须将sessionid放到cookie里面，然后发送给客户端，
+        没有sessionid就没有session ，session是依赖于cookie的
+        反过来说，cookie是seesion的基石
+
+    2：Cookie和LocalStorage的区别？
+    >>>
+    区别1：cookie每次请求都会带给服务器，而localstorage不会被带到服务器上去
+    区别2：cookie的最大存储容量是4k，localstorage存储容量最大是5M
+
+    3：LocalStorage和SessionStorage的区别？
+    >>>
+    sessionstorage在用户关闭页面（会话结束）后，信息就会失效,
+    而LocalStorage设置的信息会一直存着，除非用户手动清除
+
+
+    4；Cookie如何设置过期时间？
+    如何删除Cookie？
+    >>>cookie默认在用户关闭页面后就失效，后台代码可以任意设置Cookie的过期时间
+    设置过期时间
+    方法1：利用Expires方法，去设置具体的过期时间，具体到几分几秒
+    如：response.setHeader('Expires','Tue,01 Sep 2020 08:01:01 GM')
+                                  
+    方法2：利用Cache-Control方法，设置从程序运行生效后，一个时间长度
+    如：response.setHeader('Cache-Control','max-age=30')
+
+  
+    如何删除Cookie？删除 => 只需设置失效时间为过去的时间，就会自动被删除
+    利用Expires设置一个过去的时间点，
+    利用Cache-Control设置一个max-age为零的时间段。
+
+
+
+    5：Cache-Control：max-age=1000缓存与ETag的[缓存]有什么区别？
+
+    >>>
+    Cache-Control就是直接不请求
+    ETag是直接不下载，但是还是要请求的（响应体空的）
+    
+ 
+
+</body>
+</html>

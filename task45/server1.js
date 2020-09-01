@@ -40,13 +40,13 @@ var server = http.createServer(function(request, response){
       let value=parts[1]
       hash[key]=value
     }
-   let email=hash.sign_in_email
-  //  //let email=sessions[hash.sessionId].sign_in_email 
-  //  let mySession=sessions[hash.sessionId]
-  //  let email
-  //  if(mySession){
-  //    email=mySession.sign_in_email
-  //  }
+   // let email=hash.sign_in_email
+   //let email=sessions[hash.sessionId].sign_in_email 
+   let mySession=sessions[hash.sessionId]
+   let email
+   if(mySession){
+     email=mySession.sign_in_email
+   }
    let users=fs.readFileSync('./db/users','utf8')
    users=JSON.parse(users) 
     let foundUser
@@ -173,11 +173,11 @@ var server = http.createServer(function(request, response){
 
       if(found){
 
-        // let sId=Math.random()*100000
-        // sessions[sId]={sign_in_email:email}
-        // response.setHeader('Set-Cookie',`sessionId=${sId}`)
+        let sId=Math.random()*100000
+        sessions[sId]={sign_in_email:email}
+        response.setHeader('Set-Cookie',`sessionId=${sId}`)
         //set-cookie       
-       response.setHeader('Set-Cookie',`sign_in_email=${email}`)
+       // response.setHeader('Set-Cookie',`sign_in_email=${email}`)
         // response.setHeader('Set-Cookie',`sign_in_email=${email};HttpOnly`)//前端取不出
         response.statusCode=200
       }else{
