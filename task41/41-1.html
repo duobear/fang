@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS高级基础知识考试</title>
+</head>
+<body>
+第 1 题
+var object = {}
+object.__proto__ ===  ????填空1????  // 为 true
+
+var fn = function(){}
+fn.__proto__ === ????填空2????  // 为 true
+fn.__proto__.__proto__ === ????填空3???? // 为 true
+
+var array = []
+array.__proto__ === ????填空4???? // 为 true
+array.__proto__.__proto__ === ????填空5???? // 为 true
+
+Function.__proto__ === ????填空6???? // 为 true
+Array.__proto__ === ????填空7???? // 为 true
+Object.__proto__ === ????填空8???? // 为 true
+
+true.__proto__ === ????填空9???? // 为 true
+
+Function.prototype.__proto__ === ????填空10???? // 为 true
+
+第 1 题的回答：
+填空1：object.__proto__ ===Object.prototype 
+填空2：fn.__proto__ ===Function.prototype 
+填空3：fn.__proto__.__proto__ ===Object.prototype 
+填空4：array.__proto__ === Array.prototype
+填空5：array.__proto__.__proto__ ===Object.prototype
+填空6:Function.__proto__ === Function.prototype
+填空7：Array.__proto__ === Function.prototype
+填空8：Object.__proto__ === Function.prototype
+填空9：true.__proto__ ===Boolean.prototype
+填空10：Function.prototype.__proto__ === Object.prototype
+
+
+
+
+第 2 题
+function Fn(){
+    console.log(this)
+}
+new Fn()
+
+new Fn() 会执行 Fn，并打印出 this，请问这个 this 有哪些属性？这个 this 的原型有哪些属性？
+
+第 2 题d 回答：
+this 自身没有属性，但是有一个隐藏的__proto__ 属性
+因为Fn.__proto__===Function.prototype,所以this的原型就是Function.prototype
+this 的原型的属性有 constructor 和 __proto__
+Function.prototype.__proto__ === Object.prototype
+
+
+第 3 题
+JSON 和 JavaScript 是什么关系？
+JSON 和 JavaScript 的区别有哪些？
+
+第 3 题的回答：
+1.JSON是基于JavaScript设计的，是JavaScript的一个子集，JSON是用JavaScript语法来表示数据的一种轻量级语言。
+2.JSON和JavaScript的区别有：
+    (1)对于字符串的表示：JSON中只用双引号表示"";JavaScript单、双引号都可以。
+    (2)对于数据类型数量： JavaScript比JSON多拥有undefined，function 和 symbol;（ps JSON的数据类型为object，array，string，number，boolean，null） 
+    (3)JSON中没有变量与原型链，JavaScript有原型链与变量
+
+
+
+第 4 题
+前端 MVC 是什么？（10分）
+请用代码大概说明 MVC 三个对象分别有哪些重要属性和方法。（10分）
+
+
+第 4 题的回答：
+MVC（Model-View-Controller）是一种架构模式。它根据代码的分工进行分类。
+View 负责视图。
+Model 负责数据。
+Controller 负责处理事件和业务逻辑。
+Controller 监听 View，用户对 View 做出了操作后，Controller 会去调用 Model，Model 与服务器交互，
+得到数据后返回数据给 Controller，Controller 根据接收到的数据更新 View 视图。
+
+
+
+代码说明：
+var model = { // 数据操作
+    init: function(){}, //初始化
+    fetch: function(){},  //接收数据
+    save: function(){}  //储存数据
+}
+
+var view = document.querySelector('#xxx')  //查找页面中的标签
+
+var controller = {
+    view: null,
+    model: null,
+    init: function(view, model){  //初始化控制器
+        this.view = view
+        this.model = model
+        this.model.init()
+        this.bindEvent()
+    }
+    bindEvent: function(){} // 事件函数
+}
+
+
+
+第 5 题
+在 ES5 中如何用函数模拟一个类？（10分）
+提示：这是一个开放题，请自己想一个好的例子，然后用代码来阐述你的观点。
+
+
+第 5 题的回答：
+function Human(options){
+    this.name=options.name
+    this.city=options.city 
+    this._proto_=Human.prototype
+}
+Human.prototype.species="人类"
+Human.prototype.walk=function(){
+    console.log("我叫"+this.name+"我居住在"+this.city+"物种名是"+this.species+"使用的工具是"+this.useTOOLS)
+}
+Human.prototype.useTOOLS="镰刀"
+var human=new Human({name:'Frank',city:'Hangzhou'})
+human.walk()
+
+
+第 6 题
+用过 Promise 吗？举例说明。
+如果要你创建一个返回 Promise 对象的函数，你会怎么写？举例说明。
+
+第 6 题的回答：
+用过，如 jQuery的AJAX功能，返回的就是Promise对象
+$.ajax({url: '/xxx', method: 'get'}).then(success, fail)
+要是创建一个返回Promise对象的函数，我会这么写
+function xxx(){
+    return new Promise(function (resolve, reject){
+        setTimeout(function(){
+            成功则调用 resolve
+            失败则调用 reject
+        },3000)
+    })
+}
+
+
+
+</body>
+</html>

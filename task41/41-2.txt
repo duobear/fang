@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script >
+        function Fn(){
+            
+            console.log(this)
+
+        }
+        new Fn()
+
+        // http://blog.chinaunix.net/uid-26672038-id-3366869.html
+        // https://www.jianshu.com/p/1cf33ef0bc35
+        // https://blog.csdn.net/weixin_34354173/article/details/93183761
+    </script>
+</body>
+</html>

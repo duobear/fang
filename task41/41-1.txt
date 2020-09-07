@@ -1,0 +1,149 @@
+
+23课重学
+
+在浏览器里面，才有window，全局变量对象window
+任何地方可以使用的函数，就是全局函数
+公用的属性藏在哪 toString
+toString哪里来的-原型链
+
+window的属性分为两部分
+
+ecmascript规定
+parseint
+parsefloat
+Number()
+String()
+Boolean()
+Object()
+=========================
+私有（chrome /firefox）
+alert
+prompt
+comfirm
+document:DOM 
+history:BOM 
+
+
+
+  
+
+ var n=1
+ 代码区         数据区
+
+a                1
+
+
+例子
+
+var a=1
+var b=‘fangfang’
+var o={name：‘frank’，age：“16”}
+
+
+      stack栈内存         heap堆内存
+
+a         1
+b       ‘fangfang’  
+o       addr  100      100 name：‘frank’
+                           age：“16”
+
+
+
+
+结论：值如果简单，放stack如：7中的6中，number，string，nuil，undefind，syboml，boolean
+    值如果复制，放heap，地址的话，存入stack，，如object
+
+
+    var a=1
+    var b=a
+    b=2
+    a？    //1
+
+
+
+
+
+    var a={name:'a'}
+    var b=a 
+    b={name:'b'}
+    a.name?   //'a'
+
+
+     var a={name:'a'}
+    var b=a 
+    b.name='b'
+    a.name?   //'b'
+
+
+
+
+    var a={name:'a'}
+    var b=a 
+    b=null
+    a?    //原来的{name'a'}
+
+
+
+    object对象的实例的堆里面，存放自己的变量，还会放共有属性的引用
+    __proto__：44
+
+    44这个块区域，有共有属性toString（），valueOf（）等
+
+
+    nubmber的实例堆里面，比object多了一层
+proto：100
+proto：44
+
+因此，number，string，boolean有自己的一层proto，然后自己的层再指向最大的
+最大的是object的proto
+
+☆☆☆结论：Object的共有属性是所有对象的共有属性(共有属性叫原型)
+
+所有对象的共有属性
+
+Object.prottotype
+Object的共有属性
+
+--指向，没有--代表名字
+
+var o1={}
+o1.__proto__==== Object.prototype 
+
+var n=new Number(1)
+n.__proto__====Number.prototype
+n.__proto__.__proto__===Object.prototype
+
+
+
+
+var s=new String('1')
+s.__proto__=String.prototype
+s.__proto__.__proto__===Object.prototype
+
+
+
+
+
+String.prototype是String的共有属性的引用（防止跑，拍回收
+s.__proto__是String的共有属性的引用（用的）
+
+var ------=new ---------
+
+对象     函数
+
+var  对象=new 函数（）
+
+对象.__proto__===函数.prototype
+
+
+
+
+Number.__proto__ ===Function.prototype // 因为 Number 是函数，是 Function 的实例
+Object.__proto__ = Function.prototype // 因为 Object 是函数，是 Function 的实例
+Function.__proto__ == Function.prototye // 因为 Function 是函数，是 Function 的实例！
+
+Object.__proto__ === Function.prototype
+Object.prototype.__proto__ ===null
+
+
+String.prototype__proto__===Object.prototye
