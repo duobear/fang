@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用SASS、Babel命令行</title>
+</head>
+<body>
+    node_modules/  package-lock.json
+
+
+1：安装saas
+    安装命令：npm install node-sass -g
+    安装出错：请搜索关键词 node-saas安装失败
+
+    在安装过程中，主要是windows平台缺少编译环境，所发生的问题
+    解决命令为
+        找到.npmrc文件的位置，然后复制下面的3句代码到该文件里，并保存文件
+        phantomjs_cdnurl=http://cnpmjs.org/downloads
+        sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
+        registry=https://registry.npm.taobao.org
+
+    a、先运行： npm install -g node-gyp
+    b、然后运行：运行 npm install --global --production windows-build-tools
+    c、卸载之前的node-saas
+    npm uninstall node-sass -g
+    d、全局重新安装
+    npm install node-sass -g
+    mian.scss
+2：查看node-sass版本
+    查看命令：node-sass -v
+
+    node-sass       4.14.1  (Wrapper)       [JavaScript]
+    libsass         3.5.5   (Sass Compiler) [C/C++]
+
+3:使用node-sass 
+    例子：node-sass src/style.scss dest/style.css
+    意思就是把style.scss, 转换成style.css 
+
+
+    实际文件名，mian.scss
+    ==============================================================
+    image@Image-ThinkPad MINGW64 ~/AppData/Local/Programs/fang/task46/sass (master)
+    $ node-sass main.scss mian.css
+    Rendering Complete, saving .css file...
+    Wrote CSS to C:\Users\image\AppData\Local\Programs\fang\task46\sass\mian.css    
+    ==============================================================
+
+
+        sass  
+        body
+            p
+                color:red
+
+
+        scss 
+        body{
+            p{
+                color:red;
+            }
+            
+        }
+
+
+        ruby用sass 
+        前端用scss 
+        就是括号和分号的区别
+
+
+4:index.html引用翻译后的文件，就是mian.css 
+5:每次都需要运行命令，翻译，有没有那种改了原来的就出发运行命令有
+6：触发命令，自动化
+    node-sass main.scss main.css --watch
+    等待，准备中，一旦我修改了main.scss,那么命令窗口就会工作
+    ==============================================================
+    image@Image-ThinkPad MINGW64 ~/AppData/Local/Programs/fang/task46/sass (master)
+    $ node-sass main.scss mian.css --watch
+    => changed: C:\Users\image\AppData\Local\Programs\fang\task46\sass\main.scss
+    Rendering Complete, saving .css file...
+    Wrote CSS to C:\Users\image\AppData\Local\Programs\fang\task46\sass\mian.css
+    ==============================================================
+7：node-sass自动化工具介绍结束，主要是进行scss转换成css的
+    https://github.com/sass/node-sass
+
+8：安装babel
+安装前，先新建package.json
+        --------------------------------
+        {
+            "name": "babel",
+            "version": "1.0.0",
+            "description": "",
+            "main": "index.js",
+            "dependencies": {},
+            "devDependencies": {},
+            "scripts": {
+              "test": "echo \"Error: no test specified\" && exit 1"
+            },
+            "author": "",
+            "license": "ISC"
+          }         
+
+        ---------------------------------
+新建的合法命令：npm init 按住很多个enter，然后安装bable
+安装命令：npm install --save-dev @babel/core @babel/cli
+安装完成后，看package.json
+
+        --------------------------------
+        {
+            "name": "babel",
+            "version": "1.0.0",
+            "description": "",
+            "main": "index.js",
+            "dependencies": {},
+            "devDependencies": {
+            "@babel/cli": "^7.11.6",
+            "@babel/core": "^7.11.6"
+            },
+            "scripts": {
+            "test": "echo \"Error: no test specified\" && exit 1"
+            },
+            "author": "",
+            "license": "ISC"
+        }       
+            
+
+        ---------------------------------
+
+        多了
+        "@babel/cli": "^7.11.6",
+        "@babel/core": "^7.11.6"
+
+
+
+9：配置package.json
+只需在"scripts"字段中添加一个字段
+    +   "scripts": {
+    +     "build": "babel src -d lib"
+    +   },
+
+
+
+10：运行babel
+npm run build，报错了
+
+11：解决报错
+执行npm run build就是执行"build": "babel src -d lib"
+
+12：继续执行，换个命令行
+babel src -d lib
+
+13：解决问题，babel是局部，因此需要是指定到具体位置
+./node_modules/.bin/babel src -d lib
+
+14：解决src doesn't exit
+创建src目录，lib不需要主动创建
+
+15：运行成功
+=================================================================================
+image@Image-ThinkPad MINGW64 ~/AppData/Local/Programs/fang/task46/babel (master)
+$ ./node_modules/.bin/babel src -d lib
+Successfully compiled 1 file with Babel (509ms).
+=================================================================================
+
+
+16：$ ./node_modules/.bin/babel src -d lib --watch 
+
+
+
+babel和node-sass都是开一个进程，不停的监控页面
+但是这个开的进程太多了，能不能用一个工具代替所有的
+
+答案就是用webpack，并且目录有点乱，是否有规范
+
+
+
+
+
+
+
+
+
+
+
+
+    babel，，因为有些需要ie，因此要转换
+    全局安装和局部安装
+
+    -d  dist  -w
+
+    let都变成var，有两份   
+
+    原始都是js，用bable转变后是dist文件里的js
+
+    那么引用了dist里的js了
+不停监听文件的改动
+
+
+
+文件很乱，是否有规范
+
+src，source，未经翻译的代码
+
+dist，distribution，待发布的代码
+
+vendors  第三方代码
+
+node_modules  第三方包
+
+
+
+
+css是翻译后
+scss放src里面
+js目录放src里面
+
+
+前端语言太多，变化多
+css-less-sass-scss-stylus（兼容less和sass），全自动
+js-coffee-es6-babel-typescript-elm 
+html-jade-pug-slim 
+
+
+webpack
+
+进入官网 
+
+npm init  回车回车huiche有一个package.json 
+
+npm install --save -dev webpack
+vi package.json 多了个web依赖
+
+
+   
+
+</body>
+</html>

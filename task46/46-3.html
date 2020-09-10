@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用webpack呆代替这些命令行</title>
+</head>
+<body>
+    1：要一个记录文件package.json，记录依赖文件
+    npm init
+    2：安装webpack
+    npm install --save-dev webpack@3
+    3：安装成功后，package.json会记录
+    "devDependencies": {
+        "webpack": "^4.44.1"
+      }
+    }
+    4：配置一个webpack文件
+    创建webpack.config.js里面放上下面7行内容
+
+        const path = require('path');
+        module.exports = {
+        entry: './src/index.js',
+        output: {
+            filename: 'main.js',
+            path: path.resolve(__dirname, 'dist'),
+        },
+        };
+    5：根据配置文件新建文件夹
+    touch src/index.js 
+    6:运行wepack，npx是找本地的wepback
+     npx  webpack或者./mode_modules/.bin/webpack
+
+     npx webpack --mode development
+
+     --------------------------------------------
+     image@Image-ThinkPad MINGW64 ~/AppData/Local/Programs/fang/task46/weback-demo-all (master)
+     $ npx webpack
+     Hash: 53090f51362773d2c4a3
+     Version: webpack 3.12.0
+     Time: 61ms
+       Asset     Size  Chunks             Chunk Names
+     main.js  2.48 kB       0  [emitted]  main
+        [0] ./src/index.js 8 bytes {0} [built]
+     
+    --------------------------------------------
+
+
+
+    接下来就是安装babel-loader ,翻译js
+    1：安装一下
+   // npm install --save-dev babel-loader babel-core babel-preset-env webpack
+    
+        npm install babel-loader babel-core babel-preset-env webpack
+   1：配置一下，在webpack。config。js，新增一下
+    如果文件是。js结尾，那么使用babel-loader翻译一下，使用bable里面的preset-env方式翻译
+    module: {
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /(node_modules|bower_components)/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ['env']
+              }
+            }
+          }
+        ]
+      }
+2:运行webpack （npx webpack）
+3：若是找不到xxx
+那么我们就npm install  xxx
+npm install @babel/core
+npm install @babel/preset-env
+若是xxx是env的话，就比较特殊，是npm install babel-preset-env
+4：再次运行webpack
+5:报错Cannot read property ‘bindings‘ of null
+解决就是新建.babelrc文件，内容如下
+{"presets": [ "@babel/preset-env" ]
+}
+
+
+
+
+--------------------------------------------------
+接下来就是安装sass-loader ,翻译css
+
+npm install sass-loader sass webpack --save-dev
+
+配置webpack，config。js，在rules里添加
+{
+  test: /\.s[ac]ss$/i,
+  use: [
+    // Creates `style` nodes from JS strings
+    'style-loader',
+    // Translates CSS into CommonJS
+    'css-loader',
+    // Compiles Sass to CSS
+    'sass-loader',
+  ],
+},
+
+安装配置里的插件
+'style-loader',        'css-loader',            'sass-loader'
+
+
+运行，会把src里面.js,.css结尾的文件，都变成zqf。js文件
+
+$ npx webpack
+Hash: 5a4a62f1e2848637df16
+Version: webpack 4.44.1
+Time: 2322ms
+Built at: 2020/09/10 涓婂崍9:35:31
+ Asset      Size  Chunks             Chunk Names
+zqf.js  18.5 KiB    main  [emitted]  main
+Entrypoint main = zqf.js
+[./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/main.scss] 282 bytes {main} [built]
+[./src/css/main.scss] 568 bytes {main} [built]
+[./src/js/app.js] 210 bytes {main} [built]
+[./src/js/module-1.js] 55 bytes {main} [built]
+[./src/js/module-2.js] 55 bytes {main} [built]
+    + 2 hidden modules
+
+
+style-loader 没有起作用，渲染页面没有起到作用
+安装一下node-saas 
+npm install node-sass
+
+
+为了兼容，要加前缀样式
+autoprefixer 
+需要安装postcss-loader 
+
+
+
+rm -rf node_modules
+npm -i
+
+
+<div>
+
+  mkdir webpack-demo
+cd webpack-demo
+npm init -y
+npm install webpack webpack-cli --save-dev
+</div>
+</body>
+</html>

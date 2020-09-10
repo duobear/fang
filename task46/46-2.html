@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用更多命令行 </title>
+</head>
+<body>
+使用webpack之前，要用合理的文件规范
+
+
+src：
+source，未经翻译的代码
+
+dist：
+distribution，待发布的代码
+
+vendors 
+第三方代码
+
+node_modules  
+放第三方包
+
+
+1：安装watch-cli
+    npm i -g watch-cli
+2：运行watch-cli 
+    运行前创建两个文件夹，以及源文件src的index。html
+    watch -p 'src/index.html' -c 'cp src/index.html  dist/index.html'
+    ----------------------------------------------------------------------
+    $ watch -p 'src/index.html' -c 'cp src/index.html  dist/index.html'
+    Watching started
+    C:\Users\image\AppData\Local\Programs\fang\task46\watch\src\index.html changed
+    Running cp src/index.html  dist/index.html
+    Finished cp src/index.html  dist/index.html
+    Watching started
+    ----------------------------------------------------------------------
+    
+</body>
+</html>
