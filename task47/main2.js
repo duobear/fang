@@ -1,25 +1,7 @@
 
 //在真正返回response之前使用
-
-let book={
-    name:'javascript 高级程序设计',
-    number:2,
-    id:1
-}
-axios.interceptors.response.use(function(response){
-    // let config=response.config
-    // let{method,url,data}=config//data是请求的data
-
-    let{config:{method,url,data}}=response
-    if(url==='/books/1'&&method==='get'){
-        response.data=book
-
-    }else if(url==='/books/1'&&method==='put'){
-        Object.assign(book,data)
-        response.data=book
-    }
-    return response
-})
+fakeData()
+/*上面是假的后台 */
 
 
 axios.get('/books/1')
@@ -59,3 +41,26 @@ $('#app').on('click','#rest',function(){
         $('#number').text(0)
     })
 })
+
+/*不要看 */
+function fakeData(){
+    let book={
+        name:'javascript 高级程序设计',
+        number:2,
+        id:1
+    }
+    axios.interceptors.response.use(function(response){
+        // let config=response.config
+        // let{method,url,data}=config//data是请求的data
+
+        let{config:{method,url,data}}=response
+        if(url==='/books/1'&&method==='get'){
+            response.data=book
+
+        }else if(url==='/books/1'&&method==='put'){
+            Object.assign(book,data)
+            response.data=book
+        }
+        return response
+    })
+}

@@ -6,6 +6,39 @@
     <title>引入Vue</title>
 </head>
 <body>
-    
+1：引入bootcdn中的vue。js 
+    然后把main2-3.js 改造一下，改造后的文件变成main3.js
+
+    把View改成Vue，然后function View与View.prototype,相关删除
+2：改语法
+标记从__name__改成{{name}}
+vue强制把data传给vue，之前是传给mode的
+template：只放根元素，再嵌套一个div 
+render就是可以删除了，不需要render
+vue会把vue里面的data升级，直接用this。view。number，而不是this。view。data。number
+vue更新只更新的地方
+
+vue把原来controller整个都用methons属性代替，把控制里面的函数，都放methons属性 
+用v-on：click=“addONE”，模板中的id可以不用了
+
+函数中的newNuber就是，this。number代替
+vue的初始化的函数，cretaed（）{}
+
+
+vue就是mvc的升级
+
+
+
+     vue不需要controller 
+     vue的methos，就是controller
+
+
+     created（）{}
+
+
+vue变的更智能
+
+v-model ="n"
+     
 </body>
 </html>

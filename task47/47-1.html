@@ -6,16 +6,80 @@
     <title>axios</title>
 </head>
 <body>
+    ajax的用法 
+    $.ajax({
+        url:'/xxx',
+        method:'post'
+    })
+    $.get('/xxx')
+    $.post('/xxx',data)
+    -----------------
+    axios.get()
+    axios.post()
+    axios.put()
+    axios.pathc()
+    axios.delete()
 
-     es6的大技巧df   te
+
+
+    axios的优点
+    1：比jquery的ajax功能更多
+    2：除了ajsx功能之外，就没有其他功能，*更专注
+     
+
+    jquery+document 
+    axios+vue 
+     
+    搞个例子
+    书籍的例子
+
+    index.html 
+    书名
+    数量
+    3个按钮
+    点击按钮数量+1，-1，或者清零的功能
+
+    按钮的点击事件，得到老的的数量，在老的数量上+1，赋值给新的，然后在按钮的文本展示新结果
+
+    第一本书拿到结果后then，得到一个response，打出response
+
+    intercptors
+    拦截机
+    axios.interceptors.response.use(function(response){})
+    在真正返回response返回之前，拦截一下
+      
 
      let config=response.config 
      let {method,url,data}=config 
 
-
+     //两行合并一行
      let{congfig:{method,url,data}}=response
 
+     所以流程就是先请求，服务器就得到请求的配置（连接，请求类型，数据等）
+     根据配置进行判断，然后返回对应的结果给前端
+     前端就这请求后面的then函数中，进行到页面填充
+
+
+     页面填充用的是main1-2.js  
+        页面中的代码被替换了，按钮不是原来的按钮，因此要进行委托
+        $('#addOne').on('click',function(){
+            变成main3.js里面的
+        $('#app').on('click','#addOne',function(){
+
+    main1-3.js进行数据的提前申请
+    Object.assign(book,data)//把book对象中的放入data属性，之前就有的话就是更新
+
+
+
+    并且每增加一下，都请求一下，把心数据传到后端
+    后端判断后，再添到前端的页面
       
-     
+    get和put路由下面有区别，随便都是放book
+    但是get的book是3个属性
+    put的book是4个属性
+
+    https://jsbin.com/doxanijijo/1/edit?html,js,output 
+    https://jsbin.com/doxanijijo/2/edit?html,js,output
+    https://jsbin.com/doxanijijo/edit?html,js,output
 </body>
 </html>

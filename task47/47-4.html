@@ -4,8 +4,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>使用Vue做三个小东西 </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .slides{
+            width: 300px;
+            background: red;
+            height: 100px;
+            transition: all 1s;
+        }
+        .window{
+            width: 100px;
+            height: 100px;
+            border:1px solid black;
+        }
+        ol{
+            list-style-type: none;
+        }
+        .active{
+            background: red;;
+        }
+    </style>
 </head>
 <body>
-    
+    <!-- jquery拜拜
+    axios代替jquery，ajax
+    vue代替dom操作
+
+    用例1：简单的用例
+    点击按钮，显示，再点击隐藏 
+
+
+    用例2：轮播
+    调试用html，不能用控制台
+
+
+    用例3：tab切换,循环出li
+
+
+vue的定位
+简单，容易是2回事啊
+
+-->
+    <div id="app">
+       
+    </div>
+
+  <script>
+    let view=new Vue({
+        el:'#app',
+        data:{
+            open:false,
+            transformValue:'',
+            imags:['x','y','z'],
+            selected2:0,
+            tabs2:['a','b','c'],
+            tabs:[
+                {name:'a',content:'aaa'},
+                {name:'b',content:'bbb'},
+                {name:'c',content:'ccc'},
+            ],
+            selected:'a',
+
+
+        },
+        template:`
+            <div>
+                <button v-on:click="toggle">点我</button>
+                <div v-if="open">
+                    你好
+                </div>
+                <div class="window">
+                    <div class="slides" v-bind:style="{transform:transformValue}"></div>
+                </div>
+                <button v-on:click="go(0)">1</button>
+                <button v-on:click="go(1)">2</button>
+                <button v-on:click="go(2)">3</button>
+
+                <ol>
+                    <li v-bind:class="{active:selected2===0}" v-on:click="selected2=0">1</li>
+                    <li v-bind:class="{active:selected2===1}" v-on:click="selected2=1">2</li>
+                    <li v-bind:class="{active:selected2===2}" v-on:click="selected2=2">3</li>
+                </ol>
+                <ol>
+                    <li v-show="selected2===0">1</li>
+                    <li v-show="selected2===1">2</li>
+                    <li v-show="selected2===2">3</li>
+                </ol>
+
+                <ol>
+                    <li v-for="tab in tabs2">{{tab}}</li>
+                </ol>
+
+                <ol>
+                    <li v-for="tab in tabs" v-bind:class="{active:tab.name===selected}" v-on:click="selected=tab.name" >{{tab.name}}</li>
+                </ol>
+                <ol>
+                    <li v-for="tab in tabs" v-show="selected===tab.name" >{{tab.content}}</li>
+                </ol>
+
+
+                
+            </div>
+        `,
+        methods:{
+            toggle(){
+                this.open=!this.open
+            },
+            go(index){
+                this.transformValue=`translateX(${-100*index}px)`
+
+
+            },
+        }
+        
+    })
+
+
+</script> 
+
+
 </body>
 </html>
