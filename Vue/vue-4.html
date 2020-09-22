@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-bind以及class与style的绑定</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <style>
+        .divstyle{
+            background:red;
+            width: 100px;
+            height: 100px;;
+            
+        }
+        .borderstyle{
+            border:10px solid blue;
+        }
+        .borderstyle2{
+            border:10px solid green;
+        }
+
+        .bgred{background:red} 
+        .bgblue{background:blue}  
+        .active{ background:black;width: 100px;height: 100px;}
+        .error{border:10px solid red;}    
+    </style>
+</head>
+<body>
+    <div id="app">
+        变量语法，对象语法，数组语法
+        v-bind作用是：绑定或的属性！！！ <br>
+        <a v-bind:href="url">百度一下</a> <br>
+        <img :src="imgUrl" > <br>
+        <div :class="className">hh</div> <br>
+        绑定class对象语法{}，对象的键是类名（外面），值是布尔值（data里面属性） <br>
+        <div :class="{divstyle:isactive}">另一个hh</div><br>
+        <div :class="{}">另一个hh</div><br>
+        <div :class="{divstyle:isactive,borderstyle:isactive}">是 </div><br> 
+        <div :class="{divstyle:isactive,borderstyle2:isborder}">是 是 </div><br>
+        ===========需求：点击一点按钮，来回切换背景颜色为红，蓝色=============<br>
+       分析<br>
+       1：要一个按钮 <input type="button" value=""> <br>
+       2：定义一个红色的背景样式，和蓝色的样式 .bgred{background:red} .bgblue{background:blue}    <br>
+       3:按钮的class就是这两个样式，但是用对象的语法，样式名字就是键名，值是布尔，，默认一个是正，一个是假 <br>
+       4：点击事件触发 v-on：clcik=“xxx”，值的布尔取反 <br>
+       结果：<br>
+       <input type="button" :class={bgred:isred,bgblue:isblue} @click="changcolor" value="点击变颜色"> <br>
+       <input type="button" :class={bgred:idredblue,bgblue:!idredblue} @click="changcolor" value="点击变颜色"> <br>
+       ==========属性多的时候，逻辑复制，就用计算属性computed哟==============================<br>
+       分析：<br>
+       1：创建实例的属性computed，<br>
+       2：把所有样式的键值队放一起,然后用例子的放对象的地方放上计算属性的名字，对象就这计算属性中处理，并返回 <br>
+       3：页面就只有一个，英文多的地方就房子计算属性中
+       计算属性方法结果：<br>
+       <div :class="classnames">hhh</div> <br>
+       绑定class数组语法【】,数组中的成员直接对应类名（data里面属性） <br>
+       <div :class="[activeClass,errorClass]"></div> <br>
+       ====================================<br>
+       数组和对象混用，第一个成员是对象，第二个成员是数组成员<br>
+       <div :class="[{'active':isactive},errorClass]"></div> <br> 
+       ====================================<br>
+        绑定内联样式：键代表style的属性值，值就是代表vue实例data里的属性属性对应的值了，注意style的属性值font-size应该写成，fontSize<br>
+        <div v-bind:style="{'color':color,'fontSize':fontsize}">ddd</div> <br>
+        <div v-bind:style="{'color':color,'font-size':fontsize}">ddd</div> <br>
+        ====================================<br>
+        style数组语法
+        <div v-bind:style="[styleA,styleB]">ddd</div> <br>
+        ====================================<br>
+        css3里面transform，前缀属性，vue不需要加前缀属性
+
+    </div>
+    
+    <script>
+        var xx=new Vue({
+            el:'#app',
+            data:{
+               url:'http://www.baidu.com',
+               imgUrl:'https://www.baidu.com/img/hqydong_4f3f63f09807e2a2535ee5c2b6100511.gif',
+               className:'divstyle',
+               isactive:true,
+               isborder:true,
+               isred:true,
+               isblue:false,
+               idredblue:true,
+               activeClass:'active',
+               errorClass:'error',
+               color:"red",
+               fontsize:"19px",
+               styleA:{color:"red"},
+               styleB:{fontSize:"19px"},
+               
+            },
+            methods:{
+                changcolor:function(){
+                    this.isred=!this.isred;
+                    this.isblue=!this.isblue;
+                    this.idredblue=!this.idredblue
+                }
+            },
+            computed:{
+                classnames:function(){
+                    return {
+                        borderstyle2:this.isred&&!this.isblue,
+                        bgred:this.isred,
+                        bgblue:this.isblue,
+
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

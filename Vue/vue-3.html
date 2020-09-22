@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js计算属性的秘密</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+        {{text}} <br>
+        需求1：把'123,,456,789'，变成789，456,123 <br>
+        步骤1：用分隔符split，分割成数组{{text.split(',')}} <br>
+        步骤2：reverse去反转数组项的顺序{{text.split(',').reverse()}} <br>
+        步骤3(结果）：用join把数组再转换成字符串{{text.split(',').reverse().join(',')}}  <br>
+        ==================实现同样功能===使用计算属性======================<br>
+        计算属性得到的结果：{{reverseText}} <br>
+
+
+        逻辑过长就会变得臃肿，难以维护，所以遇到复杂的逻辑时，应当使用计算属性<br>
+        计算属性的应用场景就是解决这个臃肿<br>
+        用法1：定义computed计算属性，与el，data同级<br>
+        用法2：computed计算属性就可以包括getter和setter属性，默认是getter  <br>
+        用法3：可以使用其他用例里的data <br>      
+        {{prices}} <br>
+        我的名字是 {{fullNnae}} <br>
+        设置之后是 {{fullNnae="liu,bei"}} <br>
+        ============计算属性computed的时间戳========== <br>
+            时间戳：{{now}} <br>
+        ==========通过methods方法拿到时间戳(括号)========== <br>
+                {{thisTime()}} <br> 
+        
+        页面重新渲染，方法就会重新执行<br>
+        不管页面渲染不渲染，计算属性依赖的数据为发生变化，就永远不变<br>
+    
+       
+    </div>
+
+    <script>
+         var appgogo=new Vue({
+            el:'#abc',
+            data:{
+                msg:'heheh我是其他的'
+            }
+        })
+        var app=new Vue({
+            el:'#demo',
+            data:{
+                text:'123,456,789',  
+                firstName:'zhang',
+                lastName:'Sanfengo',          
+                package1:[
+                    {
+                        name:'iphone',
+                        prices:6999,
+                        count:2,
+                    },{
+                        name:'ipad',
+                        prices:3600,
+                        count:1,
+                    }                 
+                ],
+                package2:[
+                    {
+                        name:'iphone8',
+                        prices:6566,
+                        count:3,
+                    },{
+                        name:'ipad',
+                        prices:3600,
+                        count:6,
+                    }                 
+                ],
+            },
+            computed:{
+                reverseText:function(){
+                    return this.text.split(',').reverse().join(',');
+                },
+                prices:function(){
+                    var prices=0;
+                    // var length=Object.keys(this.$data).length
+                    for(i=0;i<this.package1.length;i++){
+                       prices+=this.package1[i].prices*this.package1[i].count
+                    }
+                    for(j=0;j<this.package2.length;j++){
+                       prices+=this.package2[j].prices*this.package2[j].count
+                    }
+                    return prices+'----------------'+appgogo.msg
+                    
+                },
+                 //计算属性的默认用法是getter,详细写法和这个默认的效果是一样的
+                // fullNnae:function(){
+                //     return this.firstName+''+this.lastName
+                    
+                // },
+                fullNnae:{
+                    get:function(){
+                        return this.firstName+''+this.lastName
+                    },
+                    set:function(newValue){
+                        //用逗号分隔，liu ，bei
+                        var names=newValue.split(',')
+                        this.firstName=names[0];
+                        this.lastName=names[1];
+                    }
+                },
+                now:function(){
+                    return Date.now()
+                },
+            },
+            methods:{
+                thisTime:function(){
+                    return Date.now() 
+                }
+            }
+        })
+    </script>
+     
+</body>
+</html>

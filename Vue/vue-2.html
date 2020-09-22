@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue实例  声明周期钩子 文本差值 数据绑定，指令事件 语法糖            </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <style>
+                
+        .transblue{
+            color:blue;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="xxx">
+        {{msg}} <br>
+        {{date}} <br>
+        过滤器,{{date  | formaDate}} <br>
+        过滤器带参数,{{date  | formaDate2(66,99)}}<br>
+        多个过滤器{{nt |one|two}} <br>
+        v-text:        <span v-text='msg'></span><br>
+        v-text★与{{}}同时       <span v-text='msg'>{{ppp}}</span><br>
+        v-text与v-html使用scrmsg的效果：scrmsg:'&lt;span style="color:red"&gt;xxx&lt/span&gt;',<br>
+        v-text:<span v-text='scrmsg'></span><br>
+        v-html:<span v-html='scrmsg'></span><br>
+        v-bind:<span v-bind:class='className'>{{ppp}}</span> <br>
+        v-on:<button v-on:click="count" v-text="countNum"></button>  <br><br>
+
+        语法糖1 v-bind:class="calssName" 变成 :class="calssName" <br>
+        v-bind:<span :class='className'>{{ppp}}</span> <br>   
+
+        语法糖2 v-on:click="count"       变成 @click="count"<br>     
+        v-on:<button @click="count" >{{countNum}}</button>  <br>
+
+    </div>
+
+    <script>
+        var plusDate=function(value){
+            return value<10?'0'+value:value
+        }
+        var app=new Vue({
+            el:'#xxx',
+            data:{
+                msg:'ddddd1',
+                scrmsg:'<span style="color:red">xxx</span>',
+                ppp:'nihao2',
+                date:new Date(),
+                className:'transblue',
+                countNum:0,
+                nt:'12=3-45',
+            },
+            // created:function(){
+
+            //     alert("created")
+            // },
+            // mounted:function(){
+            //     alert('mounted')
+            // },
+            // beforeDestroy:function(){    },
+            mounted:function(){
+                var m_this=this;
+               
+                this.timer=setInterval(function() {
+                    m_this.date=new Date()
+                }, 1000);
+            },
+            filters:{
+                formaDate:function(value){
+                    var year=value.getFullYear()
+                    var month=plusDate(value.getMonth()+1)
+                    var day=plusDate(value.getDate())
+                    var hours=plusDate(value.getHours())
+                    var min=plusDate(value.getMinutes())
+                    var sec=plusDate(value.getSeconds())
+
+                    return year+'-'+month+'-'+day+' '+hours+':'+min+':'+sec
+                },
+                formaDate2:function(value,a,b){
+                    var year=value.getFullYear()
+                    var month=plusDate(value.getMonth()+1)
+                    var day=plusDate(value.getDate())
+                    var hours=plusDate(value.getHours())
+                    var min=plusDate(value.getMinutes())
+                    var sec=plusDate(value.getSeconds())
+
+                    return year+'-'+month+'-'+day+' '+hours+':'+min+':'+sec+' '+a+' '+b
+                },
+                one:function(value){
+                    var s=value.replace('=','')
+                    return s
+                },
+                two:function(value){
+                    var s=value.replace('-','')
+                    return s
+                },
+            },
+            methods:{
+                count:function(){
+                    this.countNum=this.countNum+1
+                }
+            }
+
+
+        })
+        console.log(app.$el)
+        console.log(app.$data)     
+        console.log(app.$data.msg)
+        console.log(app.msg)
+
+        
+
+    </script>
+    <div>
+        总结： 声明周期钩子 文本差值 数据绑定，指令事件 语法糖  
+
+    </div>
+</body>
+</html>

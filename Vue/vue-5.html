@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue.js的内置指令的精髓详解</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+   
+    <div id="app">
+        <p v-cloak>mmmm</p>
+        v-cloak：解决初始化慢，导致页面闪动<br> 
+        页面网速慢的时候，会先看到{{msg}}，要等全部加载后，才会渲染完毕，cloak改变前后顺序 <br>
+        v-cloak一般与display结合使用 <br>
+        <p v-cloak>{{msg}}</p>
+        ====================================<br>
+        v-once:定义它的元素或组件只渲染一次，后续赋值也不会重新渲染
+        <p v-once>{{oncedata}}</p>
+        <p>{{oncedata}}</p>
+        ====================================<br>
+        条件渲染指定v-­if, v-­eles-­if ,v-­else ,等号后面的内容是布尔值<br>
+        <p v-if="6>3">{{apple}}</p>
+        <p v-else>{{banana}}</p>
+        <p v-if="6<3">{{apple}}</p>
+        <p v-else-if="9>5">{{pineapple}}</p>
+        <p v-else>{{banana}}</p>
+        v-if的实例用法：需求：点击按钮，实现用户名输入框和密码输入框的切换
+        <div v-if="type==='name'">
+            用户名：<input type="text" key="name" placeholder="请输入用户名" >
+        </div>
+        <div v-else>
+            密码<input type="text" key="password" placeholder="请输入密码">
+        </div>
+
+        <button v-on:click="toggleType">点击切换</button> <br>
+        v-if弊端：因为vue渲染元素，处于效率考虑尽可能的组件复用，因此这个例子就复用了用户名的input 
+        解决弊端：加key，唯一的 key='xxx'
+        ====================================<br>
+        v-show用法，显示与否取决于布尔值 <br>
+        <p v-show="9>a">我被渲染</p>
+
+        v-show与v-if的比较：<br>
+        dom结构：v-if实时旋绕，页面显示就渲染，不显示我就给你移除dom <br>
+                v-show的元素永远存在页面中，只是改变了css的display的属性 <br>
+        频繁的切换用v-show，，v-if更精准到秒类似于股票之列的
+        ====================================<br>
+        v-for用法：用于遍历的元素上，v-for后面节等号，类似于item in items
+        遍历多个对象，多个对象，一定是用数组盖起来的
+        遍历一个对象的多个属性
+        （1）遍历多个对象：<br> 遍历3个对象，{}{}{}，v-for写在要遍历的元素上,一个变量vueMth代表一个对象
+        <div>
+            序号vuejs的方法是
+            <ul>
+                <li v-for='vueMth in vueMethods'>{{ vueMth.name}}</li>
+            </ul>
+            <ul>
+                <li v-for='(vueMth,index) in vueMethods'>{{index}}-------{{ vueMth.name}}</li>
+            </ul>
+        </div>
+        （2）遍历一个对象的多个属性：<br> v k i   
+        <div>
+            <p v-for='value in nvshen'>{{value}}</p><br>
+        </div>
+
+        <div>
+            <p v-for='(value,key,index) in nvshen'>第{{index}}个女生：是{{value}}，她的键是{{key}}</p>
+        </div>
+
+        ====================================<br>        
+        数据和视图的双向绑定，修改数组，vue会检查到数据的变化，从而更新视图<br>
+        数组更新<br>
+        定义数组arr <br>
+        <div style="background: red;" v-for="study in arr">{{study}}</div>
+        push(),pop(),shift(),unshift(),
+        splice(), 三个参数 ,删除或者添加  位置，长度，东西
+        sort(),
+        <button v-on:click="sortArr" >点我排序</button>
+        <button @click="reverseArr" >点我进行数组的翻转</button>
+        <br>====以下两个vue检测不到数据的变化==<br>
+        <button @click="changeOne" >改变数组的指定项</button>
+        <button @click="changeArrLength" >改变数组的长度</button>
+        <br>====解决方法==<br>
+        Vue.set(),splice()
+        
+        ====================================<br>  
+        <div style="border:1px solid red">
+        过滤filter()
+        返回字符串中含有OO的项：{{metchOO}}
+    </div>
+        ====================================<br>  
+        方法与事件<br>
+        [boject MouseEvent]
+        如果方法中带有参数，但是调用执行没有加括号，默认传原生事件对象event
+
+        <div>
+            点击次数：{{count}}
+            <button v-on:click="handel">点我每次加1</button>
+            <button v-on:click="handel()">点我每次加1</button>
+            <button v-on:click="handel(8)">点我每次加8</button>
+            
+        </div>
+        ====================================<br>
+        修饰符
+        .stop 
+        .prevent 
+        .self 
+        .once
+        <div style="height: 100px;width: 100px; background:red;" @click='divclick'> 
+            <button @click='btnclick'>点击</button>
+        </div>
+
+        默认清空，就是点击儿子，出现儿子的alert+父亲的alert，向上冒泡
+        点击父亲，仅出现父亲的alert
+        若是想阻止冒泡，就是加修饰符.STOP
+
+
+        <div style="height: 200px;width: 400px; background:green;" @click='divclick'> 
+            <button @click.stop='btnclick'>点击,阻止单击事件向上冒泡</button>
+        </div>
+
+        <form action="" @submit.prevent="hangle">
+            <button type="submit">提交表单</button>
+        </form>
+
+        <div style="height: 100px;width: 100px; background:blue;" @click.self='divclick'> 
+            <button @click='btnclick'>点击,仅自己</button>
+        </div>
+        <div>
+            <button @click="onceMethod">执行n次</button>
+            <button @click.once="onceMethod">执行1次</button>
+        </div>
+
+        ====================================<br>
+        监听键盘事件：
+        @keyup.13="xxx"
+              .enter // 13，keycode
+              .tab 
+              .delete 
+        <div>   
+            <input type="text" @keyup.13="submitMethod" placeholder="13">
+            <input type="text" @keyup.enter="submitMethod" placeholder="enter">
+            <input type="text" @keyup.tab="tabMethod" placeholder="tab">
+            <input type="text" @keyup.delete="deleteMethod" placeholder="delete">
+        </div>
+              
+
+    </div> 
+    
+    <script>
+     
+
+        var app=new Vue({
+            el:'#app',
+            data:{
+                msg:'村里有个姑娘叫小芳d',
+                oncedata:'长得美丽又善良',
+                apple:'apple',
+                banana:'banana',
+                pineapple:'pineapple',
+                type:'name',
+                a:3,
+                //每个对象对应一个li，数组
+                vueMethods:[
+                    {name:'多思考'},
+                    {name:'多练习'},
+                    {name:'听老师讲课'}
+                ],
+                nvshen:{
+                    girls1:'高圆圆',
+                    girls2:'佟丽娅',
+                    girls3:'风小筝'
+                },
+                arr:[
+                    'book','pen','pencil','foot'
+                ],
+                count:0,
+            },
+            computed:{
+                metchOO:function(){
+                    //参数代表要过滤的每一项
+                    return this.arr.filter(function(a){
+                        return a.match(/oo/)
+                    })
+                }
+            },
+            methods:{
+                toggleType:function(){
+                    //三目运算符
+                    this.type=(this.type==='name')?'password':'name'
+                },
+                //利用sort方法进行排序
+                sortArr:function(){
+                    this.arr.sort(function(a,b){
+                        //从小到大拍
+                        return a.length-b.length
+                    })
+                },
+                reverseArr:function(){
+                    this.arr.reverse();
+                },
+               
+               // 改变数组的指定项
+               changeOne:function(){
+                // this.arr[0]='car'
+                Vue.set(this.arr,1,'car')
+               },
+               //改变数组的长度
+               changeArrLength:function(){
+                    // this.arr.length=1
+                    this.arr.splice(1)
+               },
+               handel:function(count){
+                    count=count||1
+                    this.count=this.count+count
+               },
+                btnclick:function(){
+                    alert('button被点击了')
+                },
+                divclick:function(){
+                    alert('div被点击了')
+                },
+                hangle:function(){
+                    alert("我不重载，页面也不刷新了")
+                },
+                onceMethod:function(){
+                    alert('多少次了')
+                },
+                submitMethod:function(){
+                    alert('您按下了enter键')
+                },
+                tabMethod:function(){
+                    alert('您按下了tab键')
+                },
+                deleteMethod:function(){
+                    alert('您按下了delete键')
+                }
+            }
+        })
+
+    </script>
+
+
+</body>
+</html>
